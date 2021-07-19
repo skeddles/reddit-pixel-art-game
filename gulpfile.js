@@ -46,7 +46,7 @@ gulp.task("js", function() {
 		//.pipe(sourcemaps.init())
 		.pipe(liveOnly(uglify({compress: {drop_console: true }}))).on('error', console.log)
 		//.pipe(sourcemaps.write('./maps'))
-		.pipe(gulp.dest("./build/js"));
+		.pipe(gulp.dest("./build"));
 });
 
 //css task - processes sass and minimizes scss files in /sass directory
@@ -55,7 +55,7 @@ gulp.task("css", function() {
 		.pipe(sourcemaps.init())
 		.pipe(sass({outputStyle: cssStyle}).on('error', sass.logError))
 		.pipe(sourcemaps.write('maps'))
-		.pipe(gulp.dest("./build/css"));
+		.pipe(gulp.dest("./build"));
 });
 
 //img project task - minimizes gif,png,jpg,svg files for projects - in /img
