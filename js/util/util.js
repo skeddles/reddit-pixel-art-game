@@ -1,10 +1,14 @@
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
-function degreesToRadians(degrees) {
-  	var pi = Math.PI;
-  	return degrees * (pi / 180);
-}
+function degreesToRadians(degrees) {return degrees * (Math.PI / 180);}
+
+//a random integer up to the max
+function irandom(maxInt) {return Math.round(Math.random() * maxInt);}
+//a random boolean (coin flip)
+function birandom(maxInt) {return Math.random() > 0.5}
+//return a random item from an array
+function arandom(items) {return items[Math.floor(Math.random()*items.length)];}
 
 // https://gist.github.com/ahtcx/0cd94e62691f539160b32ecda18af3d6
 function deepMergeObjects(target, source) {

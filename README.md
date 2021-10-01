@@ -5,11 +5,13 @@ This is a static site template.
 
 ### How To Run
 
+`npm run dev` - run both **watch** and **serve** in a single command line
+
+`npm run watch` - automatically run **build** on updated assets while editing
+
 `npm run build` or `gulp` - compile and move all required code, images and models into the /build folder
 
 `npm run serve` - start a local web server for the project
-
-`npm run watch` - automatically rebuild updated assets while editing
 
 `gulp js` - rebuild all javascript files
 

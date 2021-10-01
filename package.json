@@ -6,12 +6,14 @@
 	"scripts": {
 		"serve": "http-server ./build",
 		"build": "gulp",
-		"watch": "gulp watch"
+		"watch": "gulp watch",
+		"dev": "concurrently npm:serve npm:watch --restart-tries -1"
 	},
 	"author": "skeddles",
 	"license": "UNLICENCED",
 	"dependencies": {
 		"async": "^3.2.0",
+		"concurrently": "^6.2.1",
 		"file-url": "^3.0.0",
 		"gulp": "^4.0.2",
 		"gulp-environments": "^1.0.1",
@@ -19,7 +21,7 @@
 		"gulp-imagemin": "^7.1.0",
 		"gulp-include": "^2.4.1",
 		"gulp-rename": "^2.0.0",
-		"gulp-sass": "^4.1.0",
+		"gulp-sass": "^5.0.0",
 		"gulp-sourcemaps": "^3.0.0",
 		"gulp-uglify": "^3.0.2",
 		"gulp-util": "^3.0.8",
