@@ -7,7 +7,7 @@
 		"serve": "http-server ./build",
 		"build": "gulp",
 		"watch": "gulp watch",
-		"dev": "concurrently npm:serve npm:watch --restart-tries -1"
+		"dev": "concurrently npm:build npm:serve npm:watch --restart-tries -1"
 	},
 	"author": "skeddles",
 	"license": "UNLICENCED",
@@ -26,6 +26,7 @@
 		"gulp-uglify": "^3.0.2",
 		"gulp-util": "^3.0.8",
 		"puppeteer": "^9.1.1",
+		"sass": "^1.42.1",
 		"through2": "^4.0.2",
 		"uglify-es": "^3.3.9"
 	}
