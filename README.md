@@ -1,7 +1,14 @@
 
 # Web Template
 
-This is a static site template.
+This is a static site template for websites or games.
+
+
+### Setup
+
+Run `git clone https://github.com/skeddles/skeddles-web-template` to download the code.
+
+Change to the `skeddles-web-template` folder and run `npm install`
 
 ### How To Run
 
