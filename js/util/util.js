@@ -3,6 +3,15 @@ const $$ = document.querySelectorAll.bind(document);
 
 function degreesToRadians(degrees) {return degrees * (Math.PI / 180);}
 
+//random
+random = Math.random;
+smaller = Math.min;
+bigger = Math.max;
+round = Math.round;
+floor = Math.floor;
+ceil = Math.ceil;
+pow = Math.pow;
+
 //a random integer up to the max
 function irandom(maxInt) {return Math.round(Math.random() * maxInt);}
 //a random boolean (coin flip)
