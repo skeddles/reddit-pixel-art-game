@@ -1,14 +1,14 @@
 
-# Web Template
+# /r/PixelArt Collectathon
 
-This is a static site template for websites or games.
+This is the reddit /r/pixelart collectathon collaboration.
 
 
 ### Setup
 
-Run `git clone https://github.com/skeddles/skeddles-web-template` to download the code.
+Run `git clone https://github.com/skeddles/reddit-pixel-art-game` to download the code.
 
-Change to the `skeddles-web-template` folder and run `npm install`
+Change to the `reddit-pixel-art-game` folder and run `npm install`
 
 ### How To Run
 
