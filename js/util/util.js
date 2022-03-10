@@ -11,6 +11,8 @@ round = Math.round;
 floor = Math.floor;
 ceil = Math.ceil;
 pow = Math.pow;
+clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+lerp = (start, end, amount) => (1-amount)*start + amount*end;
 
 //a random integer up to the max
 function irandom(maxInt) {return Math.round(Math.random() * maxInt);}

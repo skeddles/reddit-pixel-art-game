@@ -1,14 +1,69 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
 
-	<title>Skeddles Web Template</title>
+	<title>Reddit Game</title>
 	<meta name="description" content="Web Template">
 	<meta name="author" content="skeddles">
 	<link rel="stylesheet" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
 </head> 
 <body>
 
+	<div class="mapEditor">
+		<h1>Map Editor</h1>
+
+		<div class="step1">
+			<h2>Step One - Load Background Image</h2>
+			<p>First you must upload the background image for your level. The width and height must be a multiple of 16.</p>
+			<input class="loadMap" type="file" accept=".png">
+			<p class="step1-info"></p>
+		</div>
+
+		<div class="step2">
+			<h2>Step Two - Load Data Image</h2>
+			<p>Next you must follow a map data image, which follows the <a target="_blank" href="/images/guide.png">map data image rules</a>.</p>
+			<input class="loadMapData" type="file" accept=".png">
+		</div>
+
+		<h3>Preview</h3>
+		<div class="preview">
+			<img class="mapPreview" />
+			<img class="mapDataPreview" />
+		</div>
+		
+		<div class="step3">
+			<h2>Step Three - Information & Compile</h2>
+			<p>Map images were successfully loaded. Enter your information and then click a button.</p>
+			Level Name: <input class="level-name" />
+			Reddit Username: <input class="author-username" />
+			<button class="test-level">Test Level</button>
+			<button class="download-level">Download Level</button>
+			
+		</div>
+		<button class="close">Exit Level Editor</button>
+
+	</div>
+
+	<div class="game">
+		<button class="full-screen">Full Screen</button>
+		<div class="view"></div>
+		<button class="load-level">Load Level</button>
+		<button class="load-example-level">Play Example Level</button>
+		<button class="level-editor">Level Editor</button>
+		
+		<h1>Reddit's Pixel Art Game</h1>
+
+		<p>This is a collaborative project, created by the members of /r/PixelArt, funded by Reddit's community program!</p>
+		<p>In this game you travel through mysterious doors which take you to new places, where you search for all the collectables hidden in the level.</p>
+		<p>Each level in this was created by a different member of /r/PixelArt! </p>
+		<p>The game was programmed by skeddles, and is open source on GitHub.</p>
+	</div>
+
+	<input class="file-loader" type="file"/>
 	<script src="javascript.js"></script>
 </body>
 </html>

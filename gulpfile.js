@@ -26,16 +26,22 @@ console.log('ENV:',LIVE?'live':'dev');
 const environments = require('gulp-environments');
 const liveOnly = environments.make('live');
 environments.current(LIVE?'live':'dev');
-const cssStyle = LIVE?'compressed':'nested';
+const cssStyle = LIVE?'compressed':'compressed';
 
 //████████████████████████████████████████████████████████████████████████████████
 //████████████████████████████████ TASKS █████████████████████████████████████████
 //████████████████████████████████████████████████████████████████████████████████
 
-//html task - copies html files
+//html task - copies static files
 gulp.task("files", function () {
 	return gulp.src('files/**/*.*')
 		.pipe(gulp.dest("./build"));
+});
+
+//levels task - copies level data files
+gulp.task("levels", function () {
+	return gulp.src('levels/*.json')
+		.pipe(gulp.dest("./build/levels"));
 });
  
 //js task - combines and minimizes js files in /scripts directory
@@ -77,6 +83,7 @@ gulp.task("image", function() {
 gulp.task('default',
 	gulp.series(
 		'files',
+		'levels',
 		'css',
 		'image',
 		'js'
@@ -90,6 +97,7 @@ gulp.task('watch', function(){
 
     //watch scripts folder for changes in any files
     gulp.watch(['files/**/*.*'], gulp.series('files'));
+    gulp.watch(['levels/*.json'], gulp.series('levels'));
 
     //watch scripts folder for changes in any files
     gulp.watch(['js/**/*.js*'], gulp.series('js'));
