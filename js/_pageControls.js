@@ -1,8 +1,10 @@
 
+
+/*
 //clicked the full screen button
 $('.game .full-screen').addEventListener('click', e=> {
 	$('.game .view').requestFullscreen();
-});
+});*/
 
 //clicked the load level
 $('.game .load-level').addEventListener('click', e=> {

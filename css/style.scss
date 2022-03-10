@@ -10,8 +10,33 @@ body {
 	width: 640px;
 	text-shadow: 2px 2px rgba(0,0,0,0.5);
 
-	p {
+	p, li {
 		color: #bb92bb
+	}
+
+	a, a:visited {
+		color: #db9bdb
+	}
+	a:hover {
+		color: #ffc2ff
+	}
+
+	button {
+		background: #af61af;
+		border: none;
+		color: white;
+		font-family: 'Press Start 2P', 'sans-serif';
+		padding: 0.5em 0.5em;
+		border-bottom: solid 0.25em #703770;
+		cursor: pointer;
+
+		&:hover {
+			background: #d877d8;
+		}
+	}
+
+	.view {
+		margin: 1em 0;
 	}
 }
 
@@ -26,6 +51,7 @@ body {
 	margin: 50vh auto 0 50vw;
 	transform: translateY(-50%) translateX(-50%);
 	width: 800px;
+
 	p {
 		color: mix(white, #332233, 50%);
 		font-size: 16px;
