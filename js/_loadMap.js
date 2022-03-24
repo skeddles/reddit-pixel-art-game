@@ -23,8 +23,8 @@ function loadMap (mapData) {
 
 	//load player
 	let playerSprite = PIXI.Sprite.from('images/char.png');
-		playerSprite.x = TILESIZE * GAME.currentMap.startingLocation.x;
-		playerSprite.y = TILESIZE * GAME.currentMap.startingLocation.y;
+		playerSprite.x = TILESIZE * mapData.startingLocation.x;
+		playerSprite.y = TILESIZE * mapData.startingLocation.y;
 		GAME.player = playerSprite;
 		GAME.app.stage.addChild(playerSprite);
 
@@ -44,6 +44,13 @@ function loadMap (mapData) {
 		return sprite;
 	})
 
+	//format kill tiles
+	GAME.currentMap.killTiles = GAME.currentMap.killTiles.map(kt => {
+		return {
+			x: kt.x * TILESIZE,
+			y: kt.y * TILESIZE,
+		}
+	});
 
 
 	if (DEBUG) {

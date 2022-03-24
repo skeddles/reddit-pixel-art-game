@@ -8,6 +8,8 @@ let GAME = {
 		height: 360,
 		roundPixels: true
 	}),
+	playerCollision: {},
+	CollisionTypes: [],
 };
 
 GAME.app.stage.scale.set(4)
@@ -54,84 +56,14 @@ function gameLoop (delta) {
 		GAME.currentMap.targetSquare.x = (playerGridX+hspeed) * TILESIZE;
 		GAME.currentMap.targetSquare.y = (playerGridY+vspeed) * TILESIZE;		
 	}
-
-
+	
 	//check if player is okay to move to these new coordinates
 	if (isFree(playerNewX,playerNewY)) {
 		//move player sprite
 		GAME.player.x = playerNewX;
 		GAME.player.y = playerNewY;
-
-		//MAIN COLLECTABLE collission
-		if (GAME.currentMap.mainCollectable && circleRectCollission({
-				//player
-				x: GAME.player.x+TILESIZE/2, 
-				y: GAME.player.y+TILESIZE/2, 
-				radius: (TILESIZE-2)/2
-			},{	
-				//collectable
-				left: GAME.currentMap.mainCollectable.x,
-				top: GAME.currentMap.mainCollectable.y,
-				right: GAME.currentMap.mainCollectable.x+TILESIZE,
-				bottom: GAME.currentMap.mainCollectable.y+TILESIZE,
-			})) {
-				GAME.app.stage.removeChild(GAME.currentMap.mainCollectable);
-				zzfx(...[,,730,,.06,.18,1,.23,,9.8,-158,.04,,,,,,.63,.05]);
-				delete GAME.currentMap.mainCollectable;
-			}
-		
-		//MINOR COLLECTABLE collission
-		else {
-			let minorCollectableCollission = GAME.currentMap.minorCollectables.find(collectable => circleCircleCollission({
-				//player
-				x: GAME.player.x+TILESIZE/2, 
-				y: GAME.player.y+TILESIZE/2, 
-				radius: (TILESIZE-2)/2
-			},{
-				//collectable
-				x: collectable.x + TILESIZE/2, 
-				y: collectable.y + TILESIZE/2, 
-				radius: (TILESIZE-2)/2
-			}));
-
-			if (minorCollectableCollission) {
-				console.log('collectabled', minorCollectableCollission);
-				//remove from stage
-				GAME.app.stage.removeChild(minorCollectableCollission);
-				//remove from array
-				GAME.currentMap.minorCollectables =  GAME.currentMap.minorCollectables.filter(c => c !== minorCollectableCollission);
-				//sound
-				zzfx(...[1.02,,1596,.01,.04,,1,1.63,,,,,,,,,,.52,.03]);
-			}
-
-			let killTileCollission = GAME.currentMap.killTiles.find(tile => circleRectCollission({
-				//player
-				x: GAME.player.x+TILESIZE/2, 
-				y: GAME.player.y+TILESIZE/2, 
-				radius: (TILESIZE-2)/2
-			},{
-				//tile
-				left: tile.x*TILESIZE,
-				top: tile.y*TILESIZE,
-				right: tile.x*TILESIZE+TILESIZE,
-				bottom: tile.y*TILESIZE+TILESIZE,
-			}));
-
-			if (killTileCollission) {
-				console.log('killTileCollission', killTileCollission);
-
-				//sound
-				zzfx(...[1.09,,373,,.25,.42,4,2.97,.6,,,,.19,.7,-4.4,.7,,.42,.03]);
-
-				GAME.player.x = TILESIZE * GAME.currentMap.startingLocation.x;
-				GAME.player.y = TILESIZE * GAME.currentMap.startingLocation.y;
-			}
-
-		}
-		
-			
 	}
-	//there is some sort of collission
+	//player cannot move to that space
 	else {
 
 		//if you're not trying to move diagonally...
@@ -155,6 +87,10 @@ function gameLoop (delta) {
 			if (isFree(GAME.player.x,playerNewY)) GAME.player.y += vspeed * SPEED * delta ;
 		}
 	}
+
+	//check for collisions
+	updatePlayerCollision();
+	GAME.CollisionTypes.find(ct => ct.check());
 	
 	//if the player isnt moving, snap the players position to a pixel (as long as it wouldn't cause a collission)
 	if (hspeed==0 && vspeed ==0) {
