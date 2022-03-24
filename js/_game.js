@@ -103,8 +103,11 @@ function gameLoop (delta) {
 	}
 
 	//make the camera follow the player (smoothing the motion slightly with lerping)
-	GAME.app.stage.x = lerp(GAME.app.stage.x, (-TILESIZE/2 - GAME.player.x) * GAME.app.stage.scale.x + (GAME.app.renderer.width/2), 0.1);
-	GAME.app.stage.y = lerp(GAME.app.stage.y, (-TILESIZE/2 - GAME.player.y) * GAME.app.stage.scale.y + (GAME.app.renderer.height/2), 0.1);
+	GAME.level.x = lerp(GAME.level.x, -GAME.player.x + (GAME.app.renderer.width / GAME.app.stage.scale.x / 2), 0.1);
+	GAME.level.y = lerp(GAME.level.y, -GAME.player.y + (GAME.app.renderer.height / GAME.app.stage.scale.y / 2), 0.1);
+
+	//update ui (this could be done only when needed, but it probably doesnt take much to run every frame)
+	updateUI();
 
 	//TODO: Make camera stop at edges of maps
 };

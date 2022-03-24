@@ -138,7 +138,7 @@ class CollisionType {
 
 var mainCollectable = new CollisionType('mainCollectable', 'rect', 
 	function () {
-		GAME.app.stage.removeChild(GAME.currentMap.mainCollectable);
+		GAME.level.removeChild(GAME.currentMap.mainCollectable);
 		zzfx(...[,,730,,.06,.18,1,.23,,9.8,-158,.04,,,,,,.63,.05]);
 		delete GAME.currentMap.mainCollectable;
 	}
@@ -150,6 +150,8 @@ var killTile = new CollisionType('killTiles', 'rect',
 		//sound
 		zzfx(...[1.09,,373,,.25,.42,4,2.97,.6,,,,.19,.7,-4.4,.7,,.42,.03]);
 
+		GAME.currentMap.lives--;
+
 		GAME.player.x = TILESIZE * GAME.currentMap.startingLocation.x;
 		GAME.player.y = TILESIZE * GAME.currentMap.startingLocation.y;
 	}
@@ -158,7 +160,7 @@ var killTile = new CollisionType('killTiles', 'rect',
 
 var minorCollectable = new CollisionType('minorCollectables', 'circle', function (minorCollectableCollission) {
 	//remove from stage
-	GAME.app.stage.removeChild(minorCollectableCollission);
+	GAME.level.removeChild(minorCollectableCollission);
 	//remove from array
 	GAME.currentMap.minorCollectables =  GAME.currentMap.minorCollectables.filter(c => c !== minorCollectableCollission);
 	//sound

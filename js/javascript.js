@@ -14,6 +14,7 @@ const URLPARAMS = new URLSearchParams(window.location.search);
 //=include _game.js
 //=include _input.js
 //=include _collission.js
+//=include _ui.js
 
 
 
