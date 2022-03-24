@@ -82,7 +82,7 @@ var CheckCollision = {
 			right: object.x+TILESIZE,
 			bottom: object.y+TILESIZE,
 		};
-
+		
 		// Find the closest point to the player within the rectangle
 		let closestX = clamp(player.x, rectangle.left, rectangle.right);
 		let closestY = clamp(player.y, rectangle.top, rectangle.bottom);
@@ -119,31 +119,20 @@ class CollisionType {
 		GAME.CollisionTypes.push(this);
 	}
 
-	//main function called by checkForCollisions() each frame
+	//main function called by gameloop each frame 
 	check () {
+		//get list of objects that we should check
+		let objectsToCheck;
+		if (!GAME.currentMap[this.objectHolderName]) 					objectsToCheck = [];
+		else if (Array.isArray(GAME.currentMap[this.objectHolderName])) objectsToCheck = GAME.currentMap[this.objectHolderName];
+		else 															objectsToCheck = [GAME.currentMap[this.objectHolderName]];
+
 		//loop through all of the objectsToCheck and see if any have a collission
-		let collision = this.objectsToCheck.find(this.checkForCollision.bind(this));
+		let collision = objectsToCheck.find(this.checkForCollision.bind(this));
 		if (collision) {
 			this.onCollision(collision);
 			return true;
 		}
-	}
-
-	//uses the stored objectHolderName to retreive the array of objects from the current level (and if its not an array, wrap it in an array)
-	get objectsToCheck () {
-		if (!GAME.currentMap[this.objectHolderName]) return [];
-		else if (Array.isArray(GAME.currentMap[this.objectHolderName])) return GAME.currentMap[this.objectHolderName];
-		else return [GAME.currentMap[this.objectHolderName]];
-	}
-
-	//circular collission box for player, which most functions will use
-	get playerCollision () {
-			
-		return {
-			x: GAME.player.x+TILESIZE/2, 
-			y: GAME.player.y+TILESIZE/2, 
-			radius: (TILESIZE-2)/2
-		};
 	}
 }
 
