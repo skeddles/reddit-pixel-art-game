@@ -32,20 +32,18 @@ function isFree (x,y) {
 	if (x+TILESIZE > GAME.currentMap.bg.width) return false;
 	if (y+TILESIZE > GAME.currentMap.bg.height) return false;
 
+	let playerCollision = {
+		x: x+TILESIZE/2, 
+		y: y+TILESIZE/2, 
+		radius: (TILESIZE-2)/2
+	}
+
 	//loop through every wall on the map and check if the player would hit it
 	for (let i = 0; i<GAME.currentMap.walls.length;i++) {
 		let wall = GAME.currentMap.walls[i];
 
 		//check if this wall overlaps player
-		if (circleRectCollission(
-			//player
-			{
-				x: x+TILESIZE/2, 
-				y: y+TILESIZE/2, 
-				radius: (TILESIZE-2)/2
-			},
-			//wall
-			{	
+		if (circleRectCollission(playerCollision, {	
 				left: wall.x*TILESIZE,
 				top: wall.y*TILESIZE,
 				right: wall.x*TILESIZE+TILESIZE,
@@ -54,6 +52,22 @@ function isFree (x,y) {
 			return false;
 	}
 
+
+	//loop through every door on the map and check if the player would hit it
+	if (GAME.ui.keyCount < 1) {
+		for (let i = 0; i<GAME.currentMap.doors.length;i++) {
+			let door = GAME.currentMap.doors[i];
+
+			//check if this wall overlaps player
+			if (circleRectCollission(playerCollision, {	
+					left: door.x,
+					top: door.y,
+					right: door.x+TILESIZE,
+					bottom: door.y+TILESIZE,
+				})) 
+				return false;
+		}
+	}
 
 	//success - space is free
 	return true;
@@ -120,7 +134,7 @@ class CollisionType {
 	}
 
 	//main function called by gameloop each frame 
-	check () {
+	check () {		//console.log('check', this.objectHolderName)
 		//get list of objects that we should check
 		let objectsToCheck;
 		if (!GAME.currentMap[this.objectHolderName]) 					objectsToCheck = [];
@@ -165,5 +179,32 @@ var minorCollectable = new CollisionType('minorCollectables', 'circle', function
 	GAME.currentMap.minorCollectables =  GAME.currentMap.minorCollectables.filter(c => c !== minorCollectableCollission);
 	//sound
 	zzfx(...[1.02,,1596,.01,.04,,1,1.63,,,,,,,,,,.52,.03]);
+});
+
+new CollisionType('keys', 'circle', function (keyCollission) {
+	GAME.ui.keyCount++;
+	//remove from stage
+	GAME.level.removeChild(keyCollission);
+	//remove from array
+	GAME.currentMap.keys = GAME.currentMap.keys.filter(k => k !== keyCollission);
+	//sound
+	zzfx(...[2.08,,975,,.04,.17,1,1.63,,.2,-250,.09,.02,,,,.06,.84,.02,.2]); 
+});
+
+
+new CollisionType('doors', 'rect', function (doorCollission) {
+	console.log('door')
+	if (GAME.ui.keyCount < 1) return;
+
+	GAME.ui.keyCount--;
+
+	//remove from stage
+	GAME.level.removeChild(doorCollission);
+
+	//remove from array
+	GAME.currentMap.doors = GAME.currentMap.doors.filter(k => k !== doorCollission);
+
+	//sound
+	zzfx(...[2.33,,301,.01,.04,.04,1,2.63,,,,,,.9,,.2,.14,.87,.03,.08]);
 });
 

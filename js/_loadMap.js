@@ -61,6 +61,24 @@ function loadMap (mapData) {
 		return sprite;
 	});
 
+	//load keys
+	GAME.currentMap.keys = GAME.currentMap.keys.map(key => {
+		let sprite = PIXI.Sprite.from('images/key.png');
+		sprite.x = TILESIZE * key.x;
+		sprite.y = TILESIZE * key.y;
+		GAME.level.addChild(sprite);
+		return sprite;
+	});
+
+	//load doors
+	GAME.currentMap.doors = GAME.currentMap.doors.map(door => {
+		let sprite = PIXI.Sprite.from('images/door.png');
+		sprite.x = TILESIZE * door.x;
+		sprite.y = TILESIZE * door.y;
+		GAME.level.addChild(sprite);
+		return sprite;
+	});
+
 	//format kill tiles
 	GAME.currentMap.killTiles = GAME.currentMap.killTiles.map(kt => ({
 			x: kt.x * TILESIZE,

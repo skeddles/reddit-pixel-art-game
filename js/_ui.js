@@ -23,10 +23,17 @@ function initializeUI () {
 	GAME.ui.minorCollectableCount.anchor.set(1,0);
 	GAME.ui.addChild(GAME.ui.minorCollectableCount);
 	GAME.ui.totalMinorCollectables = GAME.currentMap.minorCollectables.length;
+
+	//keys number text
+	GAME.ui.keys = new PIXI.Text('0',{fontFamily :"Press Start 2P", fontSize: 8, fill : 0xffffff, align : 'left'});
+	GAME.ui.keys.y = (GAME.app.renderer.height / GAME.app.stage.scale.y) - 8;
+	GAME.ui.addChild(GAME.ui.keys);
+	GAME.ui.keyCount = 0;
 }
 
 function updateUI () {
 	GAME.ui.lives.text = GAME.currentMap.lives;
+	GAME.ui.keys.text = GAME.ui.keyCount;
 	GAME.ui.minorCollectableCount.text = GAME.ui.totalMinorCollectables - GAME.currentMap.minorCollectables.length;
 	GAME.ui.mainCollectableFound.text = GAME.currentMap.mainCollectable ? '' : 'COMPLETE';
 }
