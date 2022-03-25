@@ -102,6 +102,10 @@ function gameLoop (delta) {
 		}
 	}
 
+	//flip sprite based on hspeed 
+	if (hspeed < 0 && GAME.player.sprite.scale.x==1) GAME.player.sprite.scale.set(-1,1);
+	else if (hspeed > 0 && GAME.player.sprite.scale.x==-1) GAME.player.sprite.scale.set(1,1);
+
 	//make the camera follow the player (smoothing the motion slightly with lerping)
 	GAME.level.x = lerp(GAME.level.x, -GAME.player.x + (GAME.app.renderer.width / GAME.app.stage.scale.x / 2), 0.1);
 	GAME.level.y = lerp(GAME.level.y, -GAME.player.y + (GAME.app.renderer.height / GAME.app.stage.scale.y / 2), 0.1);

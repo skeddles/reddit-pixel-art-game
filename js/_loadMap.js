@@ -25,13 +25,26 @@ function loadMap (mapData) {
 		GAME.level.addChild(mapDataSprite);
 	}
 
-	//load player
-	let playerSprite = PIXI.Sprite.from('images/char.png');
-		playerSprite.x = TILESIZE * mapData.startingLocation.x;
-		playerSprite.y = TILESIZE * mapData.startingLocation.y;
-		GAME.player = playerSprite;
-		GAME.level.addChild(playerSprite);
+//PLAYER
+	//create player sprite container
+	GAME.player = new PIXI.Container();
+		GAME.player.x = TILESIZE * mapData.startingLocation.x;
+		GAME.player.y = TILESIZE * mapData.startingLocation.y;
+		GAME.player = GAME.player;
+		GAME.level.addChild(GAME.player);
 
+		let bounding = new PIXI.Graphics();
+		bounding.lineStyle(1, 0xff0000);
+		bounding.drawRect(0, 0, 16, 16); // x, y, width, height
+		GAME.player.addChild(bounding);	
+	//add actual player sprite as child of container so it can be easily flipped and moved around
+	GAME.player.sprite = PIXI.Sprite.from('images/char.png');
+		GAME.player.sprite.position.set(TILESIZE/2,-TILESIZE);
+		GAME.player.sprite.anchor.set(0.5,0);
+		GAME.player.addChild(GAME.player.sprite);
+
+
+//TILES
 	//load main collectable
 	let mainCollectableSprite = PIXI.Sprite.from('images/star.png');
 		mainCollectableSprite.x = TILESIZE * GAME.currentMap.mainCollectable.x;
@@ -46,7 +59,7 @@ function loadMap (mapData) {
 		sprite.y = TILESIZE * collectable.y;
 		GAME.level.addChild(sprite);
 		return sprite;
-	})
+	});
 
 	//format kill tiles
 	GAME.currentMap.killTiles = GAME.currentMap.killTiles.map(kt => ({
@@ -71,7 +84,6 @@ function loadMap (mapData) {
 //USER Interface
 	initializeUI();
 
-	
 
 	//play start sound
 	zzfx(...[,,130,.07,.01,.12,1,.66,27,14,,,,,5]);
