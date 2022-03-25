@@ -47,9 +47,11 @@ function getImagePixels (img) {
 			if (this[i]==255 && this[i+1] == 000 && this[i+2] == 255) {callback(x,y,'magenta',	r,g,b,a); continue;}
 			if (this[i]==255 && this[i+1] == 000 && this[i+2] == 128) {callback(x,y,'pink',		r,g,b,a); continue;}
 
+			if (this[i]==142 && this[i+1] == 142 && this[i+2] == 142) {callback(x,y,'grey',     r,g,b,a); continue;}
+
 			//no color was matched - dont call function
 			//console.log('no color found', this[i],this[i+1],this[i+2],this[i+3])
-			callback(x,y,undefined,r,b,b,a);
+			callback(x,y,undefined,r,g,b,a);
 		}
 	}
 

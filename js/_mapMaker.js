@@ -100,8 +100,10 @@ function validateMapData (mapDataImg) {
 		if (!color) console.warn('MAP DATA VALIDATION ISSUE: invalid color found at X'+x+'-Y'+y+' : R'+r+'-G'+g+'-B'+b+'-A'+a);
 
 		if (!blockCount[color]) blockCount[color] = 0;
-		blockCount[color]++;		
+		blockCount[color]++;	
+		
 	});
+
 
 	console.log('final blockcount', blockCount);
 
@@ -111,6 +113,7 @@ function validateMapData (mapDataImg) {
 	if (blockCount.magenta == 0) return 'no starting point found (magenta)';
 	if (blockCount.magenta > 1) return 'too many starting points (magenta) defined (you have '+blockCount.magenta+', should be 1)';
 	if (blockCount.yellow > 1) return 'too many main collectables (yellow) defined (you have '+blockCount.yellow+', should be 1)';
+	if ((blockCount.grey != 0) && (blockCount.grey != 2)) return "you need to have exactly two teleporters";
 
 	//warnings (doesnt reject map but they might want to fix)
 	if (blockCount.yellow < 1) console.warn('MAP DATA VALIDATION ISSUE: no generic collectables (yellow) found');
@@ -135,11 +138,12 @@ function createMapJSON () {
 		minorCollectables: [],
 		keys: [],
 		doors: [],
+		teleporters: [],
 		backgroundImage: $('.mapEditor .mapPreview').src
 	};
 
 	//analyse map data image
-	getImagePixels($(".mapDataPreview")).eachPixel((x,y,color) => {
+	getImagePixels($(".mapDataPreview")).eachPixel((x,y,color,r,g,b,a) => {
 		
 		if (color == 'magenta') return levelData.startingLocation = {x:x,y:y};
 		if (color == 'yellow') return levelData.mainCollectable = [{x:x,y:y}];
@@ -150,6 +154,8 @@ function createMapJSON () {
 
 		if (color == 'cyan') return levelData.keys.push({x:x,y:y});
 		if (color == 'blue') return levelData.doors.push({x:x,y:y});
+
+		if (color == "grey") return levelData.teleporters.push({x:x,y:y});
 	});
 
 	//success
