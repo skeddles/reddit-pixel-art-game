@@ -32,20 +32,20 @@ function getImagePixels (img) {
 			if (this[i+3] !== 255) continue;
 
 			//find the matching color and return the name
-			if (this[i]==000 && this[i+1] == 000 && this[i+2] == 000) {callback(x,y,'black',	r,b,b,a); continue;}
-			if (this[i]==255 && this[i+1] == 255 && this[i+2] == 255) {callback(x,y,'white',	r,b,b,a); continue;}
-			if (this[i]==255 && this[i+1] == 000 && this[i+2] == 000) {callback(x,y,'red',		r,b,b,a); continue;}
-			if (this[i]==255 && this[i+1] == 128 && this[i+2] == 000) {callback(x,y,'orange',	r,b,b,a); continue;}
-			if (this[i]==255 && this[i+1] == 255 && this[i+2] == 000) {callback(x,y,'yellow',	r,b,b,a); continue;}
-			if (this[i]==128 && this[i+1] == 255 && this[i+2] == 000) {callback(x,y,'lime',		r,b,b,a); continue;}
-			if (this[i]==000 && this[i+1] == 255 && this[i+2] == 000) {callback(x,y,'green',	r,b,b,a); continue;}
-			if (this[i]==000 && this[i+1] == 255 && this[i+2] == 128) {callback(x,y,'teal',		r,b,b,a); continue;}
-			if (this[i]==000 && this[i+1] == 255 && this[i+2] == 255) {callback(x,y,'cyan',		r,b,b,a); continue;}
-			if (this[i]==000 && this[i+1] == 128 && this[i+2] == 255) {callback(x,y,'sky',		r,b,b,a); continue;}
-			if (this[i]==000 && this[i+1] == 000 && this[i+2] == 255) {callback(x,y,'blue',		r,b,b,a); continue;}
-			if (this[i]==128 && this[i+1] == 000 && this[i+2] == 255) {callback(x,y,'purple',	r,b,b,a); continue;}
-			if (this[i]==255 && this[i+1] == 000 && this[i+2] == 255) {callback(x,y,'magenta',	r,b,b,a); continue;}
-			if (this[i]==255 && this[i+1] == 000 && this[i+2] == 128) {callback(x,y,'pink',		r,b,b,a); continue;}
+			if (this[i]==000 && this[i+1] == 000 && this[i+2] == 000) {callback(x,y,'black',	r,g,b,a); continue;}
+			if (this[i]==255 && this[i+1] == 255 && this[i+2] == 255) {callback(x,y,'white',	r,g,b,a); continue;}
+			if (this[i]==255 && this[i+1] == 000 && this[i+2] == 000) {callback(x,y,'red',		r,g,b,a); continue;}
+			if (this[i]==255 && this[i+1] == 128 && this[i+2] == 000) {callback(x,y,'orange',	r,g,b,a); continue;}
+			if (this[i]==255 && this[i+1] == 255 && this[i+2] == 000) {callback(x,y,'yellow',	r,g,b,a); continue;}
+			if (this[i]==128 && this[i+1] == 255 && this[i+2] == 000) {callback(x,y,'lime',		r,g,b,a); continue;}
+			if (this[i]==000 && this[i+1] == 255 && this[i+2] == 000) {callback(x,y,'green',	r,g,b,a); continue;}
+			if (this[i]==000 && this[i+1] == 255 && this[i+2] == 128) {callback(x,y,'teal',		r,g,b,a); continue;}
+			if (this[i]==000 && this[i+1] == 255 && this[i+2] == 255) {callback(x,y,'cyan',		r,g,b,a); continue;}
+			if (this[i]==000 && this[i+1] == 128 && this[i+2] == 255) {callback(x,y,'sky',		r,g,b,a); continue;}
+			if (this[i]==000 && this[i+1] == 000 && this[i+2] == 255) {callback(x,y,'blue',		r,g,b,a); continue;}
+			if (this[i]==128 && this[i+1] == 000 && this[i+2] == 255) {callback(x,y,'purple',	r,g,b,a); continue;}
+			if (this[i]==255 && this[i+1] == 000 && this[i+2] == 255) {callback(x,y,'magenta',	r,g,b,a); continue;}
+			if (this[i]==255 && this[i+1] == 000 && this[i+2] == 128) {callback(x,y,'pink',		r,g,b,a); continue;}
 
 			//no color was matched - dont call function
 			//console.log('no color found', this[i],this[i+1],this[i+2],this[i+3])
