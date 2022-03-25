@@ -1,3 +1,21 @@
+
+
+
+
+new TileType('keys', {
+	uiInit: ()=> {
+		//keys number text
+		GAME.ui.keys = new PIXI.Text('0',{fontFamily :"Press Start 2P", fontSize: 8, fill : 0xffffff, align : 'left'});
+		GAME.ui.keys.y = (GAME.app.renderer.height / GAME.app.stage.scale.y) - 8;
+		GAME.ui.addChild(GAME.ui.keys);
+		GAME.ui.keyCount = 0;
+	},
+	uiUpdate: ()=> {
+		GAME.ui.keys.text = GAME.ui.keyCount;
+	}
+});
+
+
 new CollisionType('keys', 'circle', function (keyCollission) {
 	GAME.ui.keyCount++;
 	//remove from stage

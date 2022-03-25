@@ -1,3 +1,21 @@
+
+new TileType('killTiles', {
+	onLoad: kt => ({
+		x: kt.x * TILESIZE,
+		y: kt.y * TILESIZE,
+	}),
+	uiInit: ()=> {
+		//lives number text
+		GAME.ui.lives = new PIXI.Text('3',{fontFamily :"Press Start 2P", fontSize: 8, fill : 0xffffff, align : 'left'});
+		GAME.ui.addChild(GAME.ui.lives);
+		GAME.currentMap.lives = 3;
+	},
+	uiUpdate: ()=> {
+		GAME.ui.lives.text = GAME.currentMap.lives;
+	}
+	
+});
+
 new CollisionType('killTiles', 'rect', 
 	function () {
 

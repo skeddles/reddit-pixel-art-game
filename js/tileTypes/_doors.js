@@ -1,3 +1,9 @@
+
+
+new TileType('doors', {
+
+});
+
 new CollisionType('doors', 'rect', function (doorCollission) {
 	console.log('door')
 	if (GAME.ui.keyCount < 1) return;

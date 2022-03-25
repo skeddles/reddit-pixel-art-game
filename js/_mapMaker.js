@@ -129,7 +129,7 @@ function createMapJSON () {
 		title: $('.mapEditor .level-name').value,
 		author: $('.mapEditor .author-username').value,
 		startingLocation: null,
-		mainCollectable: null,
+		mainCollectable: [],
 		walls: [],
 		killTiles: [],
 		minorCollectables: [],
@@ -142,7 +142,7 @@ function createMapJSON () {
 	getImagePixels($(".mapDataPreview")).eachPixel((x,y,color) => {
 		
 		if (color == 'magenta') return levelData.startingLocation = {x:x,y:y};
-		if (color == 'yellow') return levelData.mainCollectable = {x:x,y:y};
+		if (color == 'yellow') return levelData.mainCollectable = [{x:x,y:y}];
 
 		if (color == 'black') return levelData.walls.push({x:x,y:y});
 		if (color == 'red') return levelData.killTiles.push({x:x,y:y});

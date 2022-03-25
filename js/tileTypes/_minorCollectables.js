@@ -1,3 +1,18 @@
+
+new TileType('minorCollectables', {
+	uiInit: ()=>{
+		//minor collectables text
+		GAME.ui.minorCollectableCount = new PIXI.Text('0',{fontFamily :"Press Start 2P", fontSize: 8, fill : 0xffffff, align : 'right'});
+		GAME.ui.minorCollectableCount.x = (GAME.app.renderer.width / GAME.app.stage.scale.x);
+		GAME.ui.minorCollectableCount.anchor.set(1,0);
+		GAME.ui.addChild(GAME.ui.minorCollectableCount);
+		GAME.ui.totalMinorCollectables = GAME.currentMap.minorCollectables.length;
+	},
+	uiUpdate: ()=> {
+		GAME.ui.minorCollectableCount.text = GAME.ui.totalMinorCollectables - GAME.currentMap.minorCollectables.length;
+	}
+});
+
 new CollisionType('minorCollectables', 'circle', function (minorCollectableCollission) {
 	//remove from stage
 	GAME.level.removeChild(minorCollectableCollission);

@@ -7,6 +7,7 @@ const URLPARAMS = new URLSearchParams(window.location.search);
 //=include lib/ZzFXMicro.min.js 
 //=include util/_downloadObjectAsJson.js
 //=include util/util.js
+//=include _debug.js
 //=include _pageControls.js
 //=include _getImagePixels.js
 //=include _mapMaker.js
@@ -14,7 +15,7 @@ const URLPARAMS = new URLSearchParams(window.location.search);
 //=include _game.js
 //=include _input.js
 //=include _collission.js
-//=include _ui.js
+//=include _tileTypes.js
 //=include tileTypes/*.js
 
 

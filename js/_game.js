@@ -3,6 +3,7 @@ PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 //objec that holds all live game data
 let GAME = {
+	ready: false,
 	app: new PIXI.Application({ 
 		width: 640, 
 		height: 360,
@@ -30,7 +31,7 @@ function gameLoop (delta) {
 	//initialize speed calculation
 	let hspeed=0, vspeed=0, normalizer=1;
 
-	if (!GAME.currentMap) return;
+	if (!GAME.ready) return;
 
 	//determing direction
 	if (INPUT.KeyD) hspeed = 1;
@@ -49,13 +50,6 @@ function gameLoop (delta) {
 	//calculate which spot on the grid the player is currently in
 	let playerGridX = round(GAME.player.x/TILESIZE);
 	let playerGridY = round(GAME.player.y/TILESIZE);
-
-	if (DEBUG) {
-		GAME.currentMap.playerSquare.x = playerGridX * TILESIZE;
-		GAME.currentMap.playerSquare.y = playerGridY * TILESIZE;
-		GAME.currentMap.targetSquare.x = (playerGridX+hspeed) * TILESIZE;
-		GAME.currentMap.targetSquare.y = (playerGridY+vspeed) * TILESIZE;		
-	}
 	
 	//check if player is okay to move to these new coordinates
 	if (isFree(playerNewX,playerNewY)) {
@@ -109,11 +103,12 @@ function gameLoop (delta) {
 	//make the camera follow the player (smoothing the motion slightly with lerping)
 	GAME.level.x = lerp(GAME.level.x, -GAME.player.x + (GAME.app.renderer.width / GAME.app.stage.scale.x / 2), 0.1);
 	GAME.level.y = lerp(GAME.level.y, -GAME.player.y + (GAME.app.renderer.height / GAME.app.stage.scale.y / 2), 0.1);
+	//TODO: Make camera stop at edges of maps
 
 	//update ui (this could be done only when needed, but it probably doesnt take much to run every frame)
-	updateUI();
+	GAME.tileTypes.forEach(type => type.uiUpdate());
 
-	//TODO: Make camera stop at edges of maps
+	debug.onLoop();
 };
 
 
