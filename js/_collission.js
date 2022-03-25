@@ -1,4 +1,30 @@
 
+class CollisionType {
+	constructor (objectHolderName, collisionType, onCollision) {
+		this.objectHolderName = objectHolderName;
+		this.checkForCollision = CheckCollision[collisionType];
+		this.onCollision = onCollision;
+
+		GAME.CollisionTypes.push(this);
+	}
+
+	//main function called by gameloop each frame 
+	check () {		//console.log('check', this.objectHolderName)
+		//get list of objects that we should check
+		let objectsToCheck;
+		if (!GAME.currentMap[this.objectHolderName]) 					objectsToCheck = [];
+		else if (Array.isArray(GAME.currentMap[this.objectHolderName])) objectsToCheck = GAME.currentMap[this.objectHolderName];
+		else 															objectsToCheck = [GAME.currentMap[this.objectHolderName]];
+
+		//loop through all of the objectsToCheck and see if any have a collission
+		let collision = objectsToCheck.find(this.checkForCollision.bind(this));
+		if (collision) {
+			this.onCollision(collision);
+			return true;
+		}
+	}
+}
+
 //returns true or false, whether the circle and rectangle are overlapping
 function circleRectCollission (circle, rectangle) {
 	// Find the closest point to the circle within the rectangle
@@ -124,87 +150,11 @@ var CheckCollision = {
 	},
 }
 
-class CollisionType {
-	constructor (objectHolderName, collisionType, onCollision) {
-		this.objectHolderName = objectHolderName;
-		this.checkForCollision = CheckCollision[collisionType];
-		this.onCollision = onCollision;
-
-		GAME.CollisionTypes.push(this);
-	}
-
-	//main function called by gameloop each frame 
-	check () {		//console.log('check', this.objectHolderName)
-		//get list of objects that we should check
-		let objectsToCheck;
-		if (!GAME.currentMap[this.objectHolderName]) 					objectsToCheck = [];
-		else if (Array.isArray(GAME.currentMap[this.objectHolderName])) objectsToCheck = GAME.currentMap[this.objectHolderName];
-		else 															objectsToCheck = [GAME.currentMap[this.objectHolderName]];
-
-		//loop through all of the objectsToCheck and see if any have a collission
-		let collision = objectsToCheck.find(this.checkForCollision.bind(this));
-		if (collision) {
-			this.onCollision(collision);
-			return true;
-		}
-	}
-}
-
-var mainCollectable = new CollisionType('mainCollectable', 'rect', 
-	function () {
-		GAME.level.removeChild(GAME.currentMap.mainCollectable);
-		zzfx(...[,,730,,.06,.18,1,.23,,9.8,-158,.04,,,,,,.63,.05]);
-		delete GAME.currentMap.mainCollectable;
-	}
-);
-
-var killTile = new CollisionType('killTiles', 'rect', 
-	function () {
-
-		//sound
-		zzfx(...[1.09,,373,,.25,.42,4,2.97,.6,,,,.19,.7,-4.4,.7,,.42,.03]);
-
-		GAME.currentMap.lives--;
-
-		GAME.player.x = TILESIZE * GAME.currentMap.startingLocation.x;
-		GAME.player.y = TILESIZE * GAME.currentMap.startingLocation.y;
-	}
-);
 
 
-var minorCollectable = new CollisionType('minorCollectables', 'circle', function (minorCollectableCollission) {
-	//remove from stage
-	GAME.level.removeChild(minorCollectableCollission);
-	//remove from array
-	GAME.currentMap.minorCollectables =  GAME.currentMap.minorCollectables.filter(c => c !== minorCollectableCollission);
-	//sound
-	zzfx(...[1.02,,1596,.01,.04,,1,1.63,,,,,,,,,,.52,.03]);
-});
-
-new CollisionType('keys', 'circle', function (keyCollission) {
-	GAME.ui.keyCount++;
-	//remove from stage
-	GAME.level.removeChild(keyCollission);
-	//remove from array
-	GAME.currentMap.keys = GAME.currentMap.keys.filter(k => k !== keyCollission);
-	//sound
-	zzfx(...[2.08,,975,,.04,.17,1,1.63,,.2,-250,.09,.02,,,,.06,.84,.02,.2]); 
-});
 
 
-new CollisionType('doors', 'rect', function (doorCollission) {
-	console.log('door')
-	if (GAME.ui.keyCount < 1) return;
 
-	GAME.ui.keyCount--;
 
-	//remove from stage
-	GAME.level.removeChild(doorCollission);
 
-	//remove from array
-	GAME.currentMap.doors = GAME.currentMap.doors.filter(k => k !== doorCollission);
-
-	//sound
-	zzfx(...[2.33,,301,.01,.04,.04,1,2.63,,,,,,.9,,.2,.14,.87,.03,.08]);
-});
 
