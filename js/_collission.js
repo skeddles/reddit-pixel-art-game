@@ -70,10 +70,10 @@ function isFree (x,y) {
 
 		//check if this wall overlaps player
 		if (circleRectCollission(playerCollision, {	
-				left: wall.x*TILESIZE,
-				top: wall.y*TILESIZE,
-				right: wall.x*TILESIZE+TILESIZE,
-				bottom: wall.y*TILESIZE+TILESIZE,
+				left: wall.x,
+				top: wall.y,
+				right: wall.x+TILESIZE,
+				bottom: wall.y+TILESIZE,
 			})) 
 			return false;
 	}

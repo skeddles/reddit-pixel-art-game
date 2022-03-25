@@ -1,5 +1,5 @@
 
-new TileType('killTiles', {
+new TileType('killTiles', [255,0,0], {
 	onLoad: kt => ({
 		x: kt.x * TILESIZE,
 		y: kt.y * TILESIZE,
@@ -24,7 +24,7 @@ new CollisionType('killTiles', 'rect',
 
 		GAME.currentMap.lives--;
 
-		GAME.player.x = TILESIZE * GAME.currentMap.startingLocation.x;
-		GAME.player.y = TILESIZE * GAME.currentMap.startingLocation.y;
+		GAME.player.x = GAME.currentMap.entrance[0].x;
+		GAME.player.y = GAME.currentMap.entrance[0].y;
 	}
 );

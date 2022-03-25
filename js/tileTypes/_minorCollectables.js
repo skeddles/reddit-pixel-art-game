@@ -1,5 +1,6 @@
 
-new TileType('minorCollectables', {
+new TileType('minorCollectables', [0,255,0], {
+	maxNumberAllowed: 999,
 	uiInit: ()=>{
 		//minor collectables text
 		GAME.ui.minorCollectableCount = new PIXI.Text('0',{fontFamily :"Press Start 2P", fontSize: 8, fill : 0xffffff, align : 'right'});

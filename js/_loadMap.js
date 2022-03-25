@@ -21,8 +21,8 @@ function loadMap (mapData) {
 //PLAYER
 	//create player sprite container
 	GAME.player = new PIXI.Container();
-		GAME.player.x = TILESIZE * mapData.startingLocation.x;
-		GAME.player.y = TILESIZE * mapData.startingLocation.y;
+		GAME.player.x = TILESIZE * mapData.entrance[0].x;
+		GAME.player.y = TILESIZE * mapData.entrance[0].y;
 		GAME.player = GAME.player;
 		GAME.level.addChild(GAME.player);
 
