@@ -2,7 +2,8 @@
 
 
 
-new TileType('keys', {
+new TileType('keys', [0,255,255], {
+	maxNumberAllowed: 99,
 	uiInit: ()=> {
 		//keys number text
 		GAME.ui.keys = new PIXI.Text('0',{fontFamily :"Press Start 2P", fontSize: 8, fill : 0xffffff, align : 'left'});

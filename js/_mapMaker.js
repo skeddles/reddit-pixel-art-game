@@ -1,6 +1,3 @@
-
-
-
 //keep track of which steps are visible to the user
 var loadingStep = 1;
 function nextLoadingStep (step) {
@@ -91,32 +88,24 @@ function validateMapData (mapDataImg) {
 	if (mapDataImg.width !== targetMapDataWidth) return 'map data dimentions must be exactly '+targetMapDataWidth+'x'+targetMapDataHeight+' pixels';
 	if (mapDataImg.height !== targetMapDataHeight) return 'map data dimentions must be exactly '+targetMapDataWidth+'x'+targetMapDataHeight+' pixels';
 
-	let blockCount = {blue: 0};
+	let mapData = createMapJSON();
+	for (var i=0; i<GAME.tileTypes.length; i++) {
+		let tileType = GAME.tileTypes[i];
+		let tileList = mapData[tileType.name];
 
-	//check 
-	getImagePixels(mapDataImg).eachPixel((x,y,color,r,g,b,a) => {
-		console.log('pixel', x,y, color) ;
-
-		if (!color) console.warn('MAP DATA VALIDATION ISSUE: invalid color found at X'+x+'-Y'+y+' : R'+r+'-G'+g+'-B'+b+'-A'+a);
-
-		if (!blockCount[color]) blockCount[color] = 0;
-		blockCount[color]++;	
-		
-	});
-
-
-	console.log('final blockcount', blockCount);
-
-	//validate results of map
-	if (blockCount.undefined) return 'invalid colors found in piece';
-	if (blockCount.white == 0) return 'no walkable tiles found (white)';
-	if (blockCount.magenta == 0) return 'no starting point found (magenta)';
-	if (blockCount.magenta > 1) return 'too many starting points (magenta) defined (you have '+blockCount.magenta+', should be 1)';
-	if (blockCount.yellow > 1) return 'too many main collectables (yellow) defined (you have '+blockCount.yellow+', should be 1)';
-	if ((blockCount.grey != 0) && (blockCount.grey != 2)) return "you need to have exactly two teleporters";
-
-	//warnings (doesnt reject map but they might want to fix)
-	if (blockCount.yellow < 1) console.warn('MAP DATA VALIDATION ISSUE: no generic collectables (yellow) found');
+		//no walkable tiles
+		if (mapData.walkableTiles == 0) return 'map must include walkable tiles (white)';
+		//invalid colors
+		if (mapData.invalidTiles.length > 0) return 'map data included '+mapData.invalidTiles.length+' invalid colors. The first one is ['+mapData.invalidTiles[0].color.join(',')+'] at x'+mapData.invalidTiles[0].x+' y'+mapData.invalidTiles[0].y
+		//require tile not found
+		if (tileType.required && tileList.length < 1) return 'map must include '+tileType.name+' tile';
+		//too many of tile
+		if (tileList.length > tileType.maxNumberAllowed) return 'too many '+tileType.name+' tiles are defined. max: '+tileType.maxNumberAllowed;
+		//not enough of require tile
+		if (tileList.length < tileType.minNumberAllowed && tileType.required) return 'map must include '+tileType.minNumberAllowed+''+tileType.name+' tiles';
+		//not enough of included tile
+		if (tileList.length < tileType.minNumberAllowed && tileList.length > 0) return 'map must include '+tileType.minNumberAllowed+''+tileType.name+' tiles';
+	}
 	
 	//show next loading step
 	nextLoadingStep(3);
@@ -128,34 +117,31 @@ function validateMapData (mapDataImg) {
 
 //creates the json that can be downloaded, and will be used by the final game to load levels
 function createMapJSON () {
+	//grab info from form
 	let levelData = {
 		title: $('.mapEditor .level-name').value,
 		author: $('.mapEditor .author-username').value,
-		startingLocation: null,
-		mainCollectable: [],
-		walls: [],
-		killTiles: [],
-		minorCollectables: [],
-		keys: [],
-		doors: [],
-		teleporters: [],
-		backgroundImage: $('.mapEditor .mapPreview').src
+		backgroundImage: $('.mapEditor .mapPreview').src,
+		invalidTiles: [],
+		walkableTiles: 0,
 	};
 
+	//initilize array for each tile type
+	GAME.tileTypes.forEach(tt => levelData[tt.name] = []);
+
 	//analyse map data image
-	getImagePixels($(".mapDataPreview")).eachPixel((x,y,color,r,g,b,a) => {
+	getImagePixels($(".mapDataPreview")).eachPixel((x,y,color) => {
+		//skip white tiles
+		if (color.join(',') == '255,255,255') return levelData.walkableTiles++;
+
+		//check if theres a tile defined with the same color as this pixel
+		let matchingTile = GAME.tileTypes.find(type=>type.color.join(',') === color.join(','))
 		
-		if (color == 'magenta') return levelData.startingLocation = {x:x,y:y};
-		if (color == 'yellow') return levelData.mainCollectable = [{x:x,y:y}];
+		//if a tile was found, add this tile to its array
+		if (matchingTile) return levelData[matchingTile.name].push({x:x,y:y});
 
-		if (color == 'black') return levelData.walls.push({x:x,y:y});
-		if (color == 'red') return levelData.killTiles.push({x:x,y:y});
-		if (color == 'green') return levelData.minorCollectables.push({x:x,y:y});
-
-		if (color == 'cyan') return levelData.keys.push({x:x,y:y});
-		if (color == 'blue') return levelData.doors.push({x:x,y:y});
-
-		if (color == "grey") return levelData.teleporters.push({x:x,y:y});
+		//failure - no color matched
+		levelData.invalidTiles.push({x:x,y:y,color: color});
 	});
 
 	//success
@@ -170,6 +156,9 @@ $(".mapEditor .test-level").onclick = () => {
 	
 	//hide the map editor popup
 	$(".mapEditor").classList.remove('visible');
+
+	//scroll to top of page
+	window.scrollTo(0, 0);
 }
 
 //final load map button

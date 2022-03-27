@@ -1,8 +1,6 @@
 
 
-new TileType('doors', {
-
-});
+new TileType('doors', [0,0,255], {});
 
 new CollisionType('doors', 'rect', function (doorCollission) {
 	console.log('door')

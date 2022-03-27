@@ -1,4 +1,6 @@
-new TileType('mainCollectable', {
+new TileType('mainCollectable', [255,255,0], {
+	required: true,
+	maxNumberAllowed: 1,
 	uiInit: ()=>{
 		//main collectable text
 		GAME.ui.mainCollectableFound = new PIXI.Text('',{fontFamily :"Press Start 2P", fontSize: 8, fill : 0xffffff, align : 'right'});
