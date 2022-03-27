@@ -10,7 +10,6 @@ new TileType('teleporters',[142,142,142], {
 		
 	},
 	onLoad: (object)=>{
-		console.log("teleporter loaded jim", object);
 		let sprite = PIXI.Sprite.from('images/teleporters.png');
 		sprite.x = TILESIZE * object.x;
 		sprite.y = TILESIZE * object.y;
@@ -25,8 +24,6 @@ new TileType('teleporters',[142,142,142], {
 });
 
 new CollisionType('teleporters', 'circle', function (keyCollission) {
-	console.log("teleporter collided");
-	console.log(keyCollission);
 	const playerGridX = round(GAME.player.x/TILESIZE);
 	const playerGridY = round(GAME.player.y/TILESIZE);
 	const playerGridPos = { 
