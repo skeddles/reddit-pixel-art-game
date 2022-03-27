@@ -10,7 +10,8 @@ let GAME = {
 		roundPixels: true
 	}),
 	playerCollision: {},
-	CollisionTypes: []
+	CollisionTypes: [],
+	playerInTeleporterFlag: false
 };
 
 GAME.app.stage.scale.set(4)
