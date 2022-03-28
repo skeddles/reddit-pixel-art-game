@@ -1,6 +1,3 @@
-
-
-
 //keep track of which steps are visible to the user
 var loadingStep = 1;
 function nextLoadingStep (step) {
