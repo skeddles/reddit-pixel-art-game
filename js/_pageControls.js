@@ -18,5 +18,5 @@ $('.game .load-example-level').addEventListener('click', e=> {
 		.then(exampleMapData => {
 			loadMap(exampleMapData);
 		})
-		.catch(e => console.error);
+		.catch(e => console.error('error loading map',e));
 });
