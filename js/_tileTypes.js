@@ -41,7 +41,8 @@ class TileType {
 
 	defaultTileLoader (object) {
 		console.log('default loader',this.name)
-		let sprite = PIXI.Sprite.from('images/'+this.name+'.png');
+		//let sprite = PIXI.Sprite.from('images/'+this.name+'.png');
+		let sprite = new PIXI.Sprite(GAME.currentMap.spritesheet.textures[this.name]);
 		sprite.x = TILESIZE * object.x;
 		sprite.y = TILESIZE * object.y;
 		GAME.level.addChild(sprite);

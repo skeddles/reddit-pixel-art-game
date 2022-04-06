@@ -1,16 +1,15 @@
 new TileType('teleporters',[142,142,142], {
-	required: false,
 	maxNumberAllowed: 2,
 	minNumberAllowed: 2,
-	uiInit: ()=> {
-		
-		
-	},
-	uiUpdate: ()=> {
-		
-	},
 	onLoad: (object)=>{
-		let sprite = PIXI.Sprite.from('images/teleporters.png');
+
+		// create an animated sprite
+		let sprite = new PIXI.AnimatedSprite(GAME.currentMap.spritesheet.animations['teleport1']);
+
+		// set speed, start playback and add it to the stage
+		sprite.animationSpeed = 0.167; 
+		sprite.play();
+
 		sprite.x = TILESIZE * object.x;
 		sprite.y = TILESIZE * object.y;
 		GAME.level.addChild(sprite);

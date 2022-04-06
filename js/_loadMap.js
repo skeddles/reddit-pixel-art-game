@@ -18,6 +18,12 @@ function loadMap (mapData) {
 	GAME.currentMap.bg = PIXI.Sprite.from(mapData.backgroundImage);
 	GAME.level.addChild(GAME.currentMap.bg);
 
+//SPRITESHEET
+
+	let spriteSheetTexture = new PIXI.BaseTexture('images/spritesheet.png');
+	GAME.currentMap.spritesheet = new PIXI.Spritesheet(spriteSheetTexture, GAME.spriteSheetData);
+	GAME.currentMap.spritesheet.parse(e => console.log('spritesheet textures have been loaded'));
+	
 //PLAYER
 	//create player sprite container
 	GAME.player = new PIXI.Container();
@@ -31,7 +37,7 @@ function loadMap (mapData) {
 		GAME.player.sprite.position.set(TILESIZE/2,-TILESIZE);
 		GAME.player.sprite.anchor.set(0.5,0);
 		GAME.player.addChild(GAME.player.sprite);
-		
+
 //USER Interface
 	GAME.ui = new PIXI.Container();
 	GAME.app.stage.addChild(GAME.ui);
@@ -45,4 +51,6 @@ function loadMap (mapData) {
 	GAME.ready = true;
 	//play start sound
 	zzfx(...[,,130,.07,.01,.12,1,.66,27,14,,,,,5]);
+
+
 }

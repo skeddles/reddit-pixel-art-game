@@ -16,6 +16,7 @@ const URLPARAMS = new URLSearchParams(window.location.search);
 //=include _input.js
 //=include _collision.js
 //=include _tileTypes.js
+//=include _spriteSheet.js
 //=include tileTypes/*.js
 
 
