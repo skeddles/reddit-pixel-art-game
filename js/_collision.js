@@ -145,3 +145,8 @@ var CheckCollision = {
 		return circleCircleCollision(player, circle);
 	},
 }
+
+//utility function which takes in an X or Y coordinate, and gets which grid space it's in
+function TilePos (pos) {
+	return round(pos/TILESIZE);
+}

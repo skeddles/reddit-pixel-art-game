@@ -29,7 +29,7 @@ function loadMap (mapData) {
 	GAME.player = new PIXI.Container();
 		GAME.player.x = TILESIZE * mapData.entrance[0].x;
 		GAME.player.y = TILESIZE * mapData.entrance[0].y;
-		GAME.player = GAME.player;
+		GAME.player.immobile = 0;
 		GAME.level.addChild(GAME.player);
 
 	//add actual player sprite as child of container so it can be easily flipped and moved around

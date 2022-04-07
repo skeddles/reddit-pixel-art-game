@@ -13,7 +13,7 @@ $('.game .load-level').addEventListener('click', e=> {
 
 //clicked the load level
 $('.game .load-example-level').addEventListener('click', e=> {
-	fetch('/levels/test-level-0-reddit-game-level.json')
+	fetch('/levels/test-level-3-reddit-game-level.json')
 		.then(response => response.json())
 		.then(exampleMapData => {
 			loadMap(exampleMapData);

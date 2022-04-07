@@ -40,18 +40,26 @@ function gameLoop (delta) {
 	if (INPUT.KeyW) vspeed = -1;
 	if (INPUT.KeyS) vspeed = 1;
 
+
+	//if the player is immobilized (the immobile var is equal to the timestamp when the player is allowed to move again - if its greater than now, cant move)
+	if (GAME.player.immobile > Date.now()) {
+		hspeed = 0;
+		vspeed = 0;
+		console.log('immobile')
+	}
+
 	//determine normalizer (this makes diagonal speed slower to match horizontal/vertical speed)
 	if (hspeed !== 0 && vspeed !== 0) normalizer = 0.7071;
+
 
 	//calculate new player coordinates after moving
 	let playerNewX = GAME.player.x + hspeed * SPEED * delta * normalizer;
 	let playerNewY = GAME.player.y + vspeed  * SPEED * delta * normalizer;
 
-
 	//calculate which spot on the grid the player is currently in
 	let playerGridX = round(GAME.player.x/TILESIZE);
 	let playerGridY = round(GAME.player.y/TILESIZE);
-	
+
 	//check if player is okay to move to these new coordinates
 	if (isFree(playerNewX,playerNewY)) {
 		//move player sprite

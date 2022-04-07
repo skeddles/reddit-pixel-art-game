@@ -12,7 +12,7 @@ new TileType(NAME, COLORS, OPTIONS);
 	[required]	set to true if every map must have at least one of these tiles
 	[minNumberAllowed]	a number which indicates the minimum number of these tiles allowed per map (only triggered if required, or at least one is present)
 	[maxNumberAllowed]	a number which indicates the total number of these tiles allowed per map
-	[onLoad]	this is run on EACH instance of this tile when the level is loaded. the first argument contains the coordinates as an object, and it must return an object. if not specified, it will use defaultTileLoader to spawn a single sprite on each of those tiles.
+	[onLoad]	this is run on EACH instance of this tile when the level is loaded. the first argument contains the coordinates as an object, and it must return an object. if not specified, it will use defaultTileLoader to spawn a single static sprite on each of those tiles.
 	[uiInit]	this is run once when the game is loaded, used for adding elements to the UI screen
 	[uiUpdate]	this is run every frame, used for updated values on UI elements
 */
