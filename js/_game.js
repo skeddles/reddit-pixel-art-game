@@ -106,8 +106,37 @@ function gameLoop (delta) {
 	}
 
 	//flip sprite based on hspeed 
-	if (hspeed < 0 && GAME.player.sprite.scale.x==1) GAME.player.sprite.scale.set(-1,1);
-	else if (hspeed > 0 && GAME.player.sprite.scale.x==-1) GAME.player.sprite.scale.set(1,1);
+	let gotFlipped = false;
+	if (hspeed < 0 && GAME.player.sprite.scale.x==1) {
+		GAME.player.sprite.scale.set(-1,1);
+		gotFlipped=true;
+	}
+	else if (hspeed > 0 && GAME.player.sprite.scale.x==-1) {
+		GAME.player.sprite.scale.set(1,1);
+		gotFlipped=true;
+	}
+
+
+	//update player animation
+	let newAnimation;
+	if 		(hspeed == 0 && vspeed < 0) 	newAnimation = 'up';
+	else if (hspeed == 0 && vspeed > 0) 	newAnimation = 'down';
+	else if (hspeed !== 0 && vspeed < 0) 	newAnimation = 'upside';
+	else if (hspeed !== 0 && vspeed > 0) 	newAnimation = 'downside';
+	else if (hspeed !== 0 && vspeed == 0) 	newAnimation = 'side';
+	
+	let moving = (hspeed !== 0 || vspeed !== 0); // one or both speeds are something other than 0
+	let startMoving = moving && !GAME.player.sprite.playing; //the player is moving this frame, but sprite isnt animated (so they should start being animated)
+
+	//an animation needs to be started
+	if (newAnimation && (newAnimation !== GAME.player.currentAnimation || gotFlipped || startMoving)) {
+		GAME.player.sprite.textures = GAME.playerSprites[newAnimation].textures;
+		GAME.player.sprite.play();
+		GAME.player.currentAnimation = newAnimation;
+	}
+	//make sprite stand still
+	else if (!moving) 
+		GAME.player.sprite.textures = GAME.playerSprites[GAME.player.currentAnimation].textures;
 
 	//make the camera follow the player (smoothing the motion slightly with lerping)
 	GAME.level.x = lerp(GAME.level.x, -GAME.player.x + (GAME.app.renderer.width / GAME.app.stage.scale.x / 2), 0.1);

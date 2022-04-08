@@ -33,9 +33,22 @@ function loadMap (mapData) {
 		GAME.level.addChild(GAME.player);
 
 	//add actual player sprite as child of container so it can be easily flipped and moved around
-	GAME.player.sprite = PIXI.Sprite.from('images/char.png');
+	//GAME.player.sprite = PIXI.Sprite.from('images/char.png');
+	let playerSpriteTexture = new PIXI.BaseTexture('images/player.png');
+	GAME.player.spritesheet = new PIXI.Spritesheet(playerSpriteTexture, GAME.playerSpriteData);
+		GAME.player.spritesheet.parse(e => console.log('player spritesheet been loaded'));
+		//create sprites for each character animation
+		GAME.playerSprites = {};
+		Object.keys(GAME.playerSpriteData.animations).forEach(animation => {
+			GAME.playerSprites[animation] = new PIXI.AnimatedSprite(GAME.player.spritesheet.animations[animation]);
+		});
+		
+	GAME.player.sprite = new PIXI.AnimatedSprite(GAME.player.spritesheet.animations['down']);
+		GAME.player.currentAnimation = 'down';	
 		GAME.player.sprite.position.set(TILESIZE/2,-TILESIZE);
 		GAME.player.sprite.anchor.set(0.5,0);
+		GAME.player.sprite.animationSpeed = 1/8; 
+		GAME.player.sprite.play();
 		GAME.player.addChild(GAME.player.sprite);
 
 //USER Interface
