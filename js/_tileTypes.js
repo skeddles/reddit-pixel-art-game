@@ -34,7 +34,10 @@ class TileType {
 	load () {
 		console.log('loading tiles:', this.name, this);
 		//process each object in the array of this tile with the onload function
-		GAME.currentMap[this.name] = GAME.currentMap[this.name].map(this.onLoad.bind(this));
+		try {
+			GAME.currentMap[this.name] = GAME.currentMap[this.name].map(this.onLoad.bind(this));
+		} 
+		catch (err) {return console.error('failed to load tile',this.name,err);}
 
 		this.uiInit();
 	}

@@ -51,6 +51,10 @@ function loadMap (mapData) {
 		GAME.player.sprite.play();
 		GAME.player.addChild(GAME.player.sprite);
 
+// Window Layer
+	GAME.level.windowLayer = new PIXI.Container();
+	GAME.level.addChild(GAME.level.windowLayer);
+
 //USER Interface
 	GAME.ui = new PIXI.Container();
 	GAME.app.stage.addChild(GAME.ui);

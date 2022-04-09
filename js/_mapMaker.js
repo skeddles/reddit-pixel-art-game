@@ -232,9 +232,6 @@ $(".mapEditor .test-level").onclick = () => {
 	
 	//hide the map editor popup
 	hideLevelEditor();
-
-	//scroll to top of page
-	window.scrollTo(0, 0);
 }
 
 //final load map button
@@ -254,8 +251,18 @@ $(".mapEditor button.close").onclick = () => {
 //open level editor when user clicks button
 $(".level-editor").onclick = showLevelEditor;
 
-function showLevelEditor () {$("body").classList.add('mapEditorVisible');}
-function hideLevelEditor () {$("body").classList.remove('mapEditorVisible');}
+function showLevelEditor () {
+	$("body").classList.add('mapEditorVisible');
+
+	//scroll to top of page
+	window.scrollTo(0, 0);
+}
+function hideLevelEditor () {
+	$("body").classList.remove('mapEditorVisible');
+
+	//scroll to top of page
+	window.scrollTo(0, 0);
+}
 
 
 //open level editor if url has ?showLevelEditor=true
