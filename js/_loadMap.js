@@ -20,7 +20,7 @@ function loadMap (mapData) {
 
 //SPRITESHEET
 
-	let spriteSheetTexture = new PIXI.BaseTexture('images/spritesheet.png');
+	let spriteSheetTexture = new PIXI.BaseTexture(mapData.objectSpriteSheet || 'images/spritesheet.png');
 	GAME.currentMap.spritesheet = new PIXI.Spritesheet(spriteSheetTexture, GAME.spriteSheetData);
 	GAME.currentMap.spritesheet.parse(e => console.log('spritesheet textures have been loaded'));
 	
@@ -34,7 +34,7 @@ function loadMap (mapData) {
 
 	//add actual player sprite as child of container so it can be easily flipped and moved around
 	//GAME.player.sprite = PIXI.Sprite.from('images/char.png');
-	let playerSpriteTexture = new PIXI.BaseTexture('images/player.png');
+	let playerSpriteTexture = new PIXI.BaseTexture(mapData.playerSpriteSheet || 'images/player.png');
 	GAME.player.spritesheet = new PIXI.Spritesheet(playerSpriteTexture, GAME.playerSpriteData);
 		GAME.player.spritesheet.parse(e => console.log('player spritesheet been loaded'));
 		//create sprites for each character animation

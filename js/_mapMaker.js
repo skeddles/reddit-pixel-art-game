@@ -17,7 +17,8 @@ $(".loadMap").addEventListener("change", function (e) {
 		return alert("there was a problem loading your file");
 	let mapFile = this.files[0];
 	if (!mapFile.type == "image/png")
-		return alert("map files must be png type");
+		return alert("map files must be png type (got "+mapFile.type+')');
+
 	console.log(mapFile);
 
 	const reader = new FileReader();
@@ -126,6 +127,10 @@ function createMapJSON () {
 		walkableTiles: 0,
 	};
 
+	//optional images
+	if ($('.objectSpriteSheetPreview').src) levelData.objectSpriteSheet = $('.objectSpriteSheetPreview').src;
+	if ($('.playerSpriteSheetPreview').src) levelData.playerSpriteSheet = $('.playerSpriteSheetPreview').src;
+
 	//initilize array for each tile type
 	GAME.tileTypes.forEach(tt => levelData[tt.name] = []);
 
@@ -148,6 +153,77 @@ function createMapJSON () {
 	return levelData;
 }
 
+
+//object spritesheet image was selected
+$(".loadObjectSpriteSheet").addEventListener("change", function (e) {
+	const fileList = this.files;
+	console.log("file selected", fileList);
+
+	if (!fileList || !this.files || this.files.length < 1)
+		return alert("there was a problem loading your file");
+	let mapFile = this.files[0];
+	if (!mapFile.type == "image/png")
+		return alert("map files must be png type (got "+mapFile.type+')');
+
+	console.log(mapFile);
+
+	const reader = new FileReader();
+	reader.onload = function () {
+		let img = $(".objectSpriteSheetPreview")
+
+		img.onload = ()=> {
+			let validation;
+			
+			if (img.width !== 128) validation = 'width must be exactly 128px (got '+img.width+')';
+			if (img.height !== 128) validation = 'height must be exactly 128px (got '+img.width+')';
+
+			//validation failed
+			if (validation) {
+				alert('OBJECT SPRITE SHEET IS INVALID: '+validation);
+				img.removeAttribute('src');
+			}
+		}
+		img.src = reader.result;
+	};
+
+	reader.readAsDataURL(mapFile);
+});
+
+//player spritesheet image was selected
+$(".loadPlayerSpriteSheet").addEventListener("change", function (e) {
+	const fileList = this.files;
+	console.log("file selected", fileList);
+
+	if (!fileList || !this.files || this.files.length < 1)
+		return alert("there was a problem loading your file");
+	let mapFile = this.files[0];
+	if (!mapFile.type == "image/png")
+		return alert("map files must be png type (got "+mapFile.type+')');
+
+	console.log(mapFile);
+
+	const reader = new FileReader();
+	reader.onload = function () {
+		let img = $(".playerSpriteSheetPreview")
+
+		img.onload = ()=> {
+			let validation;
+			
+			if (img.width !== 48) validation = 'width must be exactly 48px (got '+img.width+')';
+			if (img.height !== 160) validation = 'height must be exactly 160px (got '+img.width+')';
+
+			//validation failed
+			if (validation) {
+				alert('PLAYER SPRITE SHEET IS INVALID: '+validation);
+				img.removeAttribute('src');
+			}
+		}
+		img.src = reader.result;
+	};
+
+	reader.readAsDataURL(mapFile);
+});
+
 //final load map button
 $(".mapEditor .test-level").onclick = () => {
 	
@@ -155,7 +231,7 @@ $(".mapEditor .test-level").onclick = () => {
 	loadMap(createMapJSON());
 	
 	//hide the map editor popup
-	$(".mapEditor").classList.remove('visible');
+	hideLevelEditor();
 
 	//scroll to top of page
 	window.scrollTo(0, 0);
@@ -172,17 +248,18 @@ $(".mapEditor .download-level").onclick = () => {
 
 //close button - hides the map editor popup
 $(".mapEditor button.close").onclick = () => {
-	$(".mapEditor").classList.remove('visible');
+	hideLevelEditor();
 }
 
 //open level editor when user clicks button
-$(".level-editor").onclick = () => {
-	$(".mapEditor").classList.add('visible');
-}
+$(".level-editor").onclick = showLevelEditor;
+
+function showLevelEditor () {$("body").classList.add('mapEditorVisible');}
+function hideLevelEditor () {$("body").classList.remove('mapEditorVisible');}
 
 
 //open level editor if url has ?showLevelEditor=true
-if (URLPARAMS.get('showLevelEditor')) $(".mapEditor").classList.add('visible');
+if (URLPARAMS.get('showLevelEditor')) showLevelEditor();
 
 
 //open file button

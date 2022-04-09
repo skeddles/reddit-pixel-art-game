@@ -3,6 +3,16 @@ body {
 	font-family: 'Press Start 2P', 'sans-serif';
 	background: #362636 url('images/bg.png');
 	color: white;
+
+	//when map editor is opened
+	&.mapEditorVisible {
+		height: 0;
+		overflow: hidden;
+
+		.mapEditor {
+			display: block;
+		}
+	} 
 }
 
 .game {
@@ -21,68 +31,92 @@ body {
 		color: #ffc2ff
 	}
 
-	button {
-		background: #af61af;
-		border: none;
-		color: white;
-		font-family: 'Press Start 2P', 'sans-serif';
-		padding: 0.5em 0.5em;
-		border-bottom: solid 0.25em #703770;
-		cursor: pointer;
-
-		&:hover {
-			background: #d877d8;
-		}
-	}
 
 	.view {
 		margin: 1em 0;
 	}
 }
 
+a, a:visited {
+	color: #ffc2ff;
+
+	&:hover {
+		color: #ffe9ff;
+	}
+}
+
+button, input[type="file"] {
+	background: #af61af;
+	border: none;
+	color: white;
+	font-family: 'Press Start 2P', 'sans-serif';
+	padding: 0.5em 0.5em;
+	border-bottom: solid 0.25em #703770;
+	cursor: pointer;
+	margin: 1em 0;
+
+	&:hover {
+		background: #d877d8;
+	}
+}
+
 .mapEditor {
 	display: none;
 	position: absolute;
-	background: #332233;
+	background: #291d29;
 	padding: 1em;
-	border-radius: 0.5em;
-	border: solid 0.25em #c7bbc7;
-	box-shadow: 1em 1em 1em rgba(0,0,0,0.5);
-	margin: 50vh auto 0 50vw;
-	transform: translateY(-50%) translateX(-50%);
-	width: 800px;
+	top: 0; left: 0; right: 0; bottom: 0;
+	overflow-y: scroll;
 
-	p {
-		color: mix(white, #332233, 50%);
-		font-size: 16px;
+	.wrapper {
+		width: 800px;
+		margin: auto; 
+
+		h2 {
+			margin-top: 3em;
+		}
+
+		p {
+			color: mix(white, #251a25, 50%);
+			font-size: 12px;
+		}
+		
+		.preview {
+			position: relative;
+			overflow: auto;
+			width: 100%;
+			height: 256px;
+			background: rgba(0,0,0,0.2);
+
+			img.mapDataPreview {
+				position: absolute;
+				top: 0;
+				left: 0;
+				image-rendering: crisp-edges;
+				opacity: 0.5;
+			}
+		}
+
+		.objectSpriteSheetPreview, .playerSpriteSheetPreview {
+			background: rgba(0,0,0,0.2);
+			padding: 1em
+		}
+
+		input[type="text"] {
+			border: none;
+			background: rgba(0,0,0,0.2);
+			padding: 0.5em;
+		}
 	}
-	
+
 	//show only the steps that have been revealed
 	.step2, .step3, .step4 {display: none;}
 	&[data-step="step2"] .step2 {display: block;}
 	&[data-step="step3"] .step2, &[data-step="step3"] .step3 {display: block;}
 	//&[data-step="step4"] .step4 {display: block;}
-	
-	.preview {
-		position: relative;
-		overflow: auto;
-		width: 100%;
-		height: 256px;
-		background: rgba(0,0,0,0.2);
-
-		img.mapDataPreview {
-			position: absolute;
-			top: 0;
-			left: 0;
-			image-rendering: crisp-edges;
-			opacity: 0.5;
-		}
-	}
-
-	//popup
-	&.visible {
-		display: block;
-	}
 }
+
+
+
 
 .file-loader {display:none}

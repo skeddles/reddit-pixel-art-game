@@ -13,12 +13,13 @@
 </head> 
 <body>
 
-	<div class="mapEditor">
+	<div class="mapEditor"><div class="wrapper">
 		<h1>Map Editor</h1>
+		<p>Here is where you can test your level, and compile it into a single file. These files are not uploaded anywhere, and must be submitted separately through the reddit thread or our GitHub repo.</p>
 
 		<div class="step1">
 			<h2>Step One - Load Background Image</h2>
-			<p>First you must upload the background image for your level. The width and height must be a multiple of 16.</p>
+			<p>First you must upload the background image for your level. The width and height must be a multiple of 16. Minimum: 144x144; Maximum: 2048x2048</p>
 			<input class="loadMap" type="file" accept=".png">
 			<p class="step1-info"></p>
 		</div>
@@ -29,6 +30,10 @@
 			<input class="loadMapData" type="file" accept=".png">
 		</div>
 
+
+
+
+
 		<h3>Preview</h3>
 		<div class="preview">
 			<img class="mapPreview" />
@@ -36,7 +41,15 @@
 		</div>
 		
 		<div class="step3">
-			<h2>Step Three - Information & Compile</h2>
+			<h2>Step Three - Spritesheets</h2>
+			<p>THIS STEP IS COMPLETELY OPTIONAL! You can supply sprite sheets to replace the objects and character in your level. Both sheets must be the same size as the templates.</p>
+			
+			<p>Objects SpriteSheet: <input class="loadObjectSpriteSheet" type="file" accept=".png"> <a href="/images/spritesheet.png">[TEMPLATE]</a></p>
+			<img class="objectSpriteSheetPreview"/>
+			<p>Player SpriteSheet: <input class="loadPlayerSpriteSheet" type="file" accept=".png"> <a href="/images/player.png">[TEMPLATE]</a></p>
+			<img class="playerSpriteSheetPreview"/>
+
+			<h2>Step Four - Information & Compile</h2>
 			<p>Map images were successfully loaded. Enter your information and then click a button.</p>
 			Level Name: <input class="level-name" />
 			Reddit Username: <input class="author-username" />
@@ -46,7 +59,7 @@
 		</div>
 		<button class="close">Exit Level Editor</button>
 
-	</div>
+	</div></div>
 
 	<div class="game">
 		<!--<button class="full-screen">Full Screen</button>-->
@@ -69,6 +82,7 @@
 			<li>minor collectables</li>
 			<li>tiles that kill you</li>
 			<li>door/key </li>
+			<li>4 separate 2-way teleporters</li>
 			<li>simple user interface</li>
 		</ul>
 		<h2>Not Yet Implemented</h2>
@@ -76,12 +90,12 @@
 			<li>Proper character animations</li>
 			<li>Custom sprites for levels</li>
 			<li>fullscreen mode</li>
+			<li>hub world / unlockable levels</li>
 		</ul>
 		<h2>Might be Implemented</h2>
 		<ul>
 			<li>Pushable blocks</li>
 			<li>Enemies</li>
-			<li>Teleporting blocks</li>
 			<li>Ice Blocks</li>
 			<li>NPCs</li>
 		</ul>
