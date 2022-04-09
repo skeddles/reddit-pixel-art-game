@@ -1,9 +1,9 @@
 
 //a 2d array which maps directly to the position of each tile on the spritesheet layout
 GAME.tileNames = [
-	['mainCollectable', 'minorCollectables', 'keys', 'doors', '', '', '', ''],
+	['mainCollectable', 'minorCollectables', '', '', '', '', '', ''],
 	['teleport1a', 'teleport1b','teleport2a', 'teleport2b','teleport3a', 'teleport3b','teleport4a', 'teleport4b'],
-	['', '', '', '','', '', '', ''],
+	['keys', 'doors', '', '','', '', '', ''],
 	['', '', '', '','', '', '', ''],
 	['', '', '', '','', '', '', ''],
 	['', '', '', '','', '', '', ''],
