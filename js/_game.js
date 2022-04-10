@@ -131,7 +131,7 @@ function gameLoop (delta) {
 	//an animation needs to be started
 	if (newAnimation && (newAnimation !== GAME.player.currentAnimation || gotFlipped || startMoving)) {
 		GAME.player.sprite.textures = GAME.playerSprites[newAnimation].textures;
-		GAME.player.sprite.play();
+		GAME.player.sprite.gotoAndPlay(1);
 		GAME.player.currentAnimation = newAnimation;
 	}
 	//make sprite stand still
