@@ -4,8 +4,8 @@ function loadMap (mapData) {
 	console.log('loading map', mapData);
 
 	//clearing game of all objects
-	//while(GAME.level.children[0])
-	//	GAME.app.stage.removeChild(GAME.app.stage.children[0]);
+	while(GAME.app.stage.children[0])
+		GAME.app.stage.removeChild(GAME.app.stage.children[0]);
 
 	//iniitalize current map data
 	GAME.currentMap = mapData;
