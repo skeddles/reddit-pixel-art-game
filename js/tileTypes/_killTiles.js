@@ -3,6 +3,8 @@ new TileType('killTiles', [255,0,0], {
 	onLoad: kt => ({
 		x: kt.x * TILESIZE,
 		y: kt.y * TILESIZE,
+		w: TILESIZE/2,
+		h: TILESIZE/2,
 	}),
 	uiInit: ()=> {
 		//lives number text
@@ -16,15 +18,20 @@ new TileType('killTiles', [255,0,0], {
 	
 });
 
-new CollisionType('killTiles', 'rect', 
-	function () {
+new CollisionType('killTiles', 'rect', function (tile) {
 
-		//sound
-		zzfx(...[1.09,,373,,.25,.42,4,2.97,.6,,,,.19,.7,-4.4,.7,,.42,.03]);
+		console.log('killtile',tile,TilePos(tile.x), TilePos(tile.y))
+
+		if ( TilePos(GAME.player.x) !== TilePos(tile.x) ) return;
+		if ( TilePos(GAME.player.y) !== TilePos(tile.y) ) return;
 
 		GAME.currentMap.lives--;
 
+		//move player back to start
 		GAME.player.x = GAME.currentMap.entrance[0].x;
 		GAME.player.y = GAME.currentMap.entrance[0].y;
+		
+		//sound
+		zzfx(...[1.09,,373,,.25,.42,4,2.97,.6,,,,.19,.7,-4.4,.7,,.42,.03]);
 	}
 );
