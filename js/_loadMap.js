@@ -10,6 +10,7 @@ function loadMap (mapData) {
 	//iniitalize current map data
 	GAME.currentMap = mapData;
 	GAME.level = new PIXI.Container();
+		GAME.level.sortableChildren = true; //enables z-ordering
 	GAME.app.stage.addChild(GAME.level);
 
 //LEVEL
@@ -29,6 +30,7 @@ function loadMap (mapData) {
 	GAME.player = new PIXI.Container();
 		GAME.player.x = TILESIZE * mapData.entrance[0].x;
 		GAME.player.y = TILESIZE * mapData.entrance[0].y;
+		GAME.player.zIndex = 1; //keeps player on top of everything else
 		GAME.player.immobile = 0;
 		GAME.level.addChild(GAME.player);
 
@@ -53,7 +55,8 @@ function loadMap (mapData) {
 
 // Window Layer
 	GAME.level.windowLayer = new PIXI.Container();
-	GAME.level.addChild(GAME.level.windowLayer);
+		GAME.level.windowLayer.zIndex = 2; //keeps on top of player
+		GAME.level.addChild(GAME.level.windowLayer);
 
 //USER Interface
 	GAME.ui = new PIXI.Container();
