@@ -46,7 +46,7 @@ Object.keys(GAME.teleportersData).forEach(teleportId => {
 				let otherTeleporter = GetOtherTeleporter(id, teleportIndex);
 				GAME.player.x = otherTeleporter.x;
 				GAME.player.y = otherTeleporter.y;
-				GAME.player.immobile = Date.now()+500; //hold player in place for short amount of time
+				GAME.player.immobile = Date.now()+350; //hold player in place for short amount of time
 
 				zzfx(...[2.52,0,65.40639,,.63,,1,1.02,,,29,,.22,.3,,.1,.02,.32,.18,.9]); 
 			}
