@@ -81,21 +81,24 @@ function isFree(x, y) {
 	}
 
 	// Loop through every door on the map and check if the player would hit it
-	if (GAME.ui.keyCount < 1) {
-		for (const door of GAME.currentMap.doors) {
-			// Check if this wall overlaps player
-			const doorCollision = {
-				left: door.x,
-				top: door.y,
-				right: door.x + TILESIZE,
-				bottom: door.y + TILESIZE,
-			}
-
-			if (circleRectCollision(playerCollision, doorCollision)) {
+	let allDoors = [...GAME.currentMap.door1,...GAME.currentMap.door2,...GAME.currentMap.door3,...GAME.currentMap.door4];
+	
+	for (const door of allDoors) {
+		// Check if this wall overlaps player
+		const doorCollision = {
+			left: door.x,
+			top: door.y,
+			right: door.x + TILESIZE,
+			bottom: door.y + TILESIZE,
+		}
+		//if there is a door at this space
+		if (circleRectCollision(playerCollision, doorCollision)) {
+			//if the player does not have a key for this door
+			if (!findMatchingKey(door.tileType))
 				return false;
-			}
 		}
 	}
+	
 
 	// Success - space is free
 	return true;

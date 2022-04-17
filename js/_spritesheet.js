@@ -3,7 +3,7 @@
 GAME.tileNames = [
 	['mainCollectable', 'minorCollectables', '', '', 'window1', 'window2', 'window3', 'window4'],
 	['teleport1a', 'teleport1b','teleport2a', 'teleport2b','teleport3a', 'teleport3b','teleport4a', 'teleport4b'],
-	['keys', 'doors', '', '','', '', '', ''],
+	['key1', 'door1', 'key2', 'door2','key3', 'door3', 'key4', 'door4'],
 	['', '', '', '','', '', '', ''],
 	['', '', '', '','', '', '', ''],
 	['', '', '', '','', '', '', ''],
