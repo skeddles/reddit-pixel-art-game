@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "build.js",
 	"scripts": {
-		"serve": "http-server ./build",
+		"serve": "http-server ./build -c-1",
 		"build": "gulp",
 		"watch": "gulp watch",
 		"dev": "concurrently npm:build npm:serve npm:watch --restart-tries -1"
