@@ -1,6 +1,7 @@
 class CollisionType {
 	constructor(objectHolderName, collisionType, onCollision) {
 		this.objectHolderName = objectHolderName;
+		this.type = collisionType;
 		this.checkForCollision = CheckCollision[collisionType];
 		this.onCollision = onCollision;
 
@@ -9,26 +10,19 @@ class CollisionType {
 
 	// Main function called by gameloop each frame
 	check() {
-		// Get list of objects that we should check
-		let objectsToCheck;
-
-		if (!GAME.currentMap[this.objectHolderName]) {
-			return;
-		}
-
-		if (Array.isArray(GAME.currentMap[this.objectHolderName])) {
-			objectsToCheck = GAME.currentMap[this.objectHolderName];
-		} else {
-			objectsToCheck = [GAME.currentMap[this.objectHolderName]];
-		}
 
 		// Loop through all of the objectsToCheck and see if any have a collision
-		let collision = objectsToCheck.find(this.checkForCollision.bind(this));
+		let collision = this.objects.find(this.checkForCollision.bind(this));
 
 		if (collision) {
 			this.onCollision(collision);
 			return true;
 		}
+	}
+
+	// Get list of objects that use this collision type
+	get objects () {
+		return GAME.currentMap[this.objectHolderName] || [];
 	}
 }
 
