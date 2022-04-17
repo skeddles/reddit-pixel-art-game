@@ -39,6 +39,9 @@ class TileType {
 		} 
 		catch (err) {return console.error('failed to load tile',this.name,err);}
 
+		//append tiletype to each tile in case its needed
+		GAME.currentMap[this.name].forEach(t => t.tileType = this.name);
+
 		this.uiInit();
 	}
 
