@@ -40,8 +40,14 @@ gulp.task("files", function () {
 
 //levels task - copies level data files
 gulp.task("levels", function () {
+
+	let levelList = fs.readdirSync('./levels', {withFileTypes: true}).map(item => item.name)
+	fs.writeFileSync('./build/level-list.json', JSON.stringify(levelList), 'utf-8');
+	console.log('levelList',levelList);
+
 	return gulp.src('levels/*.json')
-		.pipe(gulp.dest("./build/levels"));
+		.pipe(gulp.dest("./build/levels"))
+
 });
  
 //js task - combines and minimizes js files in /scripts directory
