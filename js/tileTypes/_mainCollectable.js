@@ -1,6 +1,22 @@
 new TileType('mainCollectable', [255,255,0], {
 	required: true,
 	maxNumberAllowed: 1,
+	onLoad: (object)=> {
+
+		//if we should check if theres a loaded game
+		if (GAME.saveData && GAME.currentMap.levelName !== 'loadedLevel') {
+			//see if in the save data there is a record of finding a collectable at this same coordinate
+			if (GAME.saveData.unlockedLevels[GAME.currentMap.levelName].complete) 
+				return console.log('skipping loading collectable',object);
+		}
+
+		//create sprite like normal
+		let sprite = new PIXI.Sprite(GAME.currentMap.spritesheet.textures['mainCollectable']);
+			sprite.x = TILESIZE * object.x;
+			sprite.y = TILESIZE * object.y;
+			GAME.level.addChild(sprite);
+		return sprite;
+	},
 	uiInit: ()=>{
 		//main collectable text
 		GAME.ui.mainCollectableFound = new PIXI.Text('',{fontFamily :"Press Start 2P", fontSize: 8, fill : 0xffffff, align : 'right'});
@@ -14,10 +30,15 @@ new TileType('mainCollectable', [255,255,0], {
 	}
 });
 
-new CollisionType('mainCollectable', 'rect', 
-	function () {
-		GAME.level.removeChild(GAME.currentMap.mainCollectable[0]);
-		zzfx(...[,,730,,.06,.18,1,.23,,9.8,-158,.04,,,,,,.63,.05]);
-		GAME.currentMap.mainCollectable.length = 0;
-	}
-);
+new CollisionType('mainCollectable', 'rect',  function () {
+
+	//save the game
+	updateSaveData(()=>{
+		GAME.saveData.unlockedLevels[GAME.currentMap.levelName].complete = true;
+	});
+
+	GAME.level.removeChild(GAME.currentMap.mainCollectable[0]);
+	zzfx(...[,,730,,.06,.18,1,.23,,9.8,-158,.04,,,,,,.63,.05]);
+	GAME.currentMap.mainCollectable.length = 0;
+
+	});

@@ -10,3 +10,8 @@ document.addEventListener('keydown', e=> {
 document.addEventListener('keyup', e=> {
 	INPUT[e.code] = false;
 });
+
+//when the window focus is lost, clear all inputs
+document.addEventListener('blur', e=> {
+	Object.keys(INPUT).forEach(k => INPUT[k] = false);
+});

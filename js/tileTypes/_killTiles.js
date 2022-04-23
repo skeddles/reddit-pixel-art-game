@@ -25,7 +25,13 @@ new CollisionType('killTiles', 'rect', function (tile) {
 		if ( TilePos(GAME.player.x) !== TilePos(tile.x) ) return;
 		if ( TilePos(GAME.player.y) !== TilePos(tile.y) ) return;
 
+		//lose a life
 		GAME.currentMap.lives--;
+
+		//make sure player doesn't teleport when sent back on top of the entrance portal
+		GAME.playerInEntranceFlag = true;
+
+		GAME.player.immobile = Date.now()+500; //hold player in place for short amount of time
 
 		//move player back to start
 		GAME.player.x = GAME.currentMap.entrance[0].x;

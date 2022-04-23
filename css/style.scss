@@ -117,6 +117,9 @@ button, input[type="file"] {
 }
 
 
-
+.debug-indicator {
+	display: none;
+	&.enabled {display: block;}
+}
 
 .file-loader {display:none}

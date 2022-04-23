@@ -12,11 +12,32 @@ GAME.minorCollectableData.forEach((color, collectableId) => {
 
 	new TileType('minorCollectables'+collectableId, color, {
 		maxNumberAllowed: 999,
-		uiInit: ()=>{
+		onLoad: (object)=> {
+
 			
 			//update total count
 			if (!GAME.ui.totalMinorCollectables) GAME.ui.totalMinorCollectables = 0;
-			GAME.ui.totalMinorCollectables += GAME.currentMap['minorCollectables'+collectableId].length;
+			GAME.ui.totalMinorCollectables++;
+
+			console.log('should i load a collectable at',object)
+			//if we should check if theres a loaded game
+			if (GAME.saveData && GAME.currentMap.levelName !== 'loadedLevel') {
+				//see if in the save data there is a record of finding a collectable at this same coordinate
+				let matchingCollectable = GAME.saveData.unlockedLevels[GAME.currentMap.levelName].foundCollectables
+					.find(mc => (mc.x == object.x && mc.y == object.y));
+
+				if (matchingCollectable) return console.log('skipping loading collectable',object);
+			}
+
+			//create sprite like normal
+			let sprite = new PIXI.Sprite(GAME.currentMap.spritesheet.textures['minorCollectables'+collectableId]);
+				sprite.x = TILESIZE * object.x;
+				sprite.y = TILESIZE * object.y;
+				GAME.level.addChild(sprite);
+			return sprite;
+		},
+		uiInit: ()=>{
+
 
 			//only trigger the rest the first time
 			if (GAME.ui.hasOwnProperty('minorCollectableCount')) return; //only trigger this once
@@ -65,7 +86,13 @@ GAME.minorCollectableData.forEach((color, collectableId) => {
 
 		//remove from array
 		GAME.currentMap[minorCollectableType] =  GAME.currentMap[minorCollectableType].filter(c => c !== minorCollectableCollission);
-		
+
+		//remember that the collectable was collected (unless it's a "loaded level", aka temporary)
+		updateSaveData(()=>{
+			GAME.saveData.unlockedLevels[GAME.currentMap.levelName].foundCollectables
+				.push({x: TilePos(minorCollectableCollission.x), y: TilePos(minorCollectableCollission.y)});
+		});
+
 		//sound
 		zzfx(...[1.02,,1596,.01,.04,,1,1.63,,,,,,,,,,.52,.03]);
 	});

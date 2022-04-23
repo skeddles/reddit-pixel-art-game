@@ -29,17 +29,17 @@ const SPEED = 1.25;
 function gameLoop (delta) {
 	elapsed += delta;
 
+	//make sure the game is supposed to be running
+	if (!GAME.ready || !GAME.player) return;
+
 	//initialize speed calculation
 	let hspeed=0, vspeed=0, normalizer=1;
-
-	if (!GAME.ready) return;
 
 	//determing direction
 	if (INPUT.KeyD) hspeed = 1;
 	if (INPUT.KeyA) hspeed = -1;
 	if (INPUT.KeyW) vspeed = -1;
 	if (INPUT.KeyS) vspeed = 1;
-
 
 	//if the player is immobilized (the immobile var is equal to the timestamp when the player is allowed to move again - if its greater than now, cant move)
 	if (GAME.player.immobile > Date.now()) {
@@ -139,12 +139,13 @@ function gameLoop (delta) {
 		GAME.player.sprite.textures = GAME.playerSprites[GAME.player.currentAnimation].textures;
 
 	//make the camera follow the player (smoothing the motion slightly with lerping)
-	GAME.level.x = lerp(GAME.level.x, -GAME.player.x + (GAME.app.renderer.width / GAME.app.stage.scale.x / 2), 0.1);
-	GAME.level.y = lerp(GAME.level.y, -GAME.player.y + (GAME.app.renderer.height / GAME.app.stage.scale.y / 2), 0.1);
+	GAME.level.x = lerp(GAME.level.x, -GAME.player.x - (TILESIZE/2)	+ (GAME.app.renderer.width / GAME.app.stage.scale.x / 2), 0.1);
+	GAME.level.y = lerp(GAME.level.y, -GAME.player.y  				+ (GAME.app.renderer.height / GAME.app.stage.scale.y / 2), 0.1);
 	//TODO: Make camera stop at edges of maps
 
 	//update ui (this could be done only when needed, but it probably doesnt take much to run every frame)
-	GAME.tileTypes.forEach(type => type.uiUpdate());
+	if (!GAME.inHubWorld)
+		GAME.tileTypes.forEach(type => type.uiUpdate());
 
 	debug.onLoop();
 };

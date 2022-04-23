@@ -18,6 +18,8 @@ const URLPARAMS = new URLSearchParams(window.location.search);
 //=include _tileTypes.js
 //=include _player.js
 //=include _spritesheet.js
+//=include _hubworld.js
+//=include _saving.js
 //=include tileTypes/*.js
 
 

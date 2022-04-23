@@ -35,9 +35,11 @@ class TileType {
 		console.log('loading tiles:', this.name, this);
 		//process each object in the array of this tile with the onload function
 		try {
-			GAME.currentMap[this.name] = GAME.currentMap[this.name].map(this.onLoad.bind(this));
+			GAME.currentMap[this.name] = GAME.currentMap[this.name]
+				.map(this.onLoad.bind(this))
+				.filter(e => e) //remove any null elements
 		} 
-		catch (err) {return console.error('failed to load tile',this.name,err);}
+		catch (err) {return console.warn('failed to load tile type',this.name,err);}
 
 		//append tiletype to each tile in case its needed
 		GAME.currentMap[this.name].forEach(t => t.tileType = this.name);
@@ -57,6 +59,8 @@ class TileType {
 
 	//just makes sure the colors people put in are the right format
 	validateColor (color) {
+		if (color == 'none') return ['n','o','n','e']; //allow tiles that cannot be created in maps
+		
 		let errorMessage = 'INVALID COLOR DEFINED! The color you picked for "'+ this.name+'" tiles was invalid. Make sure it\'s an array of 3 numbers from 0-255. ERROR: ';
 		if (!Array.isArray(color)) console.error(errorMessage, 'not an array');
 		if (color.length !== 3) console.error(errorMessage, 'array length not 3');

@@ -2,6 +2,9 @@ var debug = {
 	onLoad: ()=>{
 		if (!DEBUG) return;
 
+		//show indicator at top of page 
+		$('.debug-indicator').classList.add('enabled');
+
 	//show players collission box
 		let bounding = new PIXI.Graphics();
 		bounding.lineStyle(1, 0xff0000);

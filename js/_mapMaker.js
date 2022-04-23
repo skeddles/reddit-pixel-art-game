@@ -227,8 +227,10 @@ $(".loadPlayerSpriteSheet").addEventListener("change", function (e) {
 //final load map button
 $(".mapEditor .test-level").onclick = () => {
 	
+	clearOpenSaveGame();
+
 	//create json and load it as a map
-	loadMap(createMapJSON());
+	loadMap('loadedLevel', createMapJSON());
 	
 	//hide the map editor popup
 	hideLevelEditor();
@@ -254,11 +256,17 @@ $(".level-editor").onclick = showLevelEditor;
 function showLevelEditor () {
 	$("body").classList.add('mapEditorVisible');
 
+	//make sure the game doesn't run while the editor is open
+	GAME.ready = false;
+
 	//scroll to top of page
 	window.scrollTo(0, 0);
 }
 function hideLevelEditor () {
 	$("body").classList.remove('mapEditorVisible');
+
+	//enable the game running again
+	GAME.ready = true;
 
 	//scroll to top of page
 	window.scrollTo(0, 0);
@@ -276,12 +284,14 @@ $(".load-level").onclick = () => {
 $(".file-loader").addEventListener('change', e=> {
 	console.log('loaded', e)
 
+	clearOpenSaveGame();
+
 	const reader = new FileReader();
 	reader.onload = function (d) {
 		console.log('loadddd',reader.result)
 		var fileContent = JSON.parse(reader.result);
 
-		loadMap(fileContent);
+		loadMap('loadedLevel', fileContent);
 	};
 
 	reader.readAsText($(".file-loader").files[0]);

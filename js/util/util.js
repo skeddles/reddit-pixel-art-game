@@ -21,6 +21,16 @@ function birandom(maxInt) {return Math.random() > 0.5}
 //return a random item from an array
 function arandom(items) {return items[Math.floor(Math.random()*items.length)];}
 
+Array.prototype.shuffle = function () {
+	return this.map(value => ({ value, sort: Math.random() }))
+		.sort((a, b) => a.sort - b.sort)
+		.map(({ value }) => value);
+}
+
+Number.prototype.isBetween = function(min, max) {
+	return (this > min && this < max);
+}
+
 // https://gist.github.com/ahtcx/0cd94e62691f539160b32ecda18af3d6
 function deepMergeObjects(target, source) {
 
