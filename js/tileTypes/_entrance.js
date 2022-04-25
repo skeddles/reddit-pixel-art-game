@@ -40,23 +40,9 @@ new CollisionType('entrance', 'circle', function (entranceColission) {
 		return GAME.playerInEntranceFlag = false;
 
 	//if player is no longer in entrace, but has once again entered the tile the entrance is in
-	if (GAME.playerInEntranceFlag==false && TilePos(GAME.player.x) == TilePos(entranceColission.x) && TilePos(GAME.player.y) == TilePos(entranceColission.y) ) {
-		if (GAME.saveData) {
-
-			loadHubWorld();
-
-			GAME.player.immobile = Date.now()+500;
-			
-			//play start sound
-			zzfx(...[,,130,.07,.01,.12,1,.66,27,14,,,,,5]);
-		}
-		else {
-			GAME.playerInEntranceFlag = true;
-			alert ('You are just testing - in the real game this would bring the player back to the hub world.')
-		}
-	}
-		
-
+	if (GAME.playerInEntranceFlag==false && TilePos(GAME.player.x) == TilePos(entranceColission.x) && TilePos(GAME.player.y) == TilePos(entranceColission.y) ) 
+		loadHubWorld();
+	
 	
 	if(!GAME.playerInEntranceFlag) {
 		GAME.playerInTeleporterFlag = true;

@@ -3,6 +3,14 @@ const HUBWORLDSIZE = 32; //in tiles
 const HUBWORLDBGSIZE = 64; //in pixels
 
 function loadHubWorld () {
+
+	//if just testing a level, just display test message instead, and stop loading the hub world.
+	if (!GAME.saveData) {
+		GAME.playerInEntranceFlag = true;
+		alert ('You are just testing - in the real game this would bring the player back to the hub world.');
+		return;
+	}
+
 	//clearing game of all objects
 	while(GAME.app.stage.children[0])
 		GAME.app.stage.removeChild(GAME.app.stage.children[0]);
@@ -87,12 +95,18 @@ function loadHubWorld () {
 	loadPlayer({
 		entrance: [{x:HUBWORLDSIZE/2,y:HUBWORLDSIZE/2}],
 	});
-	GAME.player.addChild(myMask)
+	GAME.player.addChild(myMask);
+	GAME.player.immobile = Date.now()+500;
+
 
 	GAME.ready = true;
 	GAME.inHubWorld = true;
 
 	debug.onLoad();
+
+				
+	//play start sound
+	zzfx(...[,,130,.07,.01,.12,1,.66,27,14,,,,,5]);
 }
 
 function spawnHubPortal (levelName, level) {
