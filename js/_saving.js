@@ -121,7 +121,6 @@ function clearSaveData () {
 
 
 function clearOpenSaveGame () {
-	saveGame();
 	delete GAME.saveData;
 }
 
