@@ -19,6 +19,7 @@ function startGame() {
 		}
 		catch (e) {
 			alert('there was an problem loading your save data');
+			delete GAME.saveData;
 		}
 	}
 
