@@ -93,8 +93,12 @@ GAME.minorCollectableData.forEach((color, collectableId) => {
 				.push({x: TilePos(minorCollectableCollission.x), y: TilePos(minorCollectableCollission.y)});
 		});
 
-		//sound
-		zzfx(...[1.02,,1596,.01,.04,,1,1.63,,,,,,,,,,.52,.03]);
+		//play sound (different sound if this was the last collectable)
+		let collectablesLeft = GAME.currentMap.minorCollectables0.length + GAME.currentMap.minorCollectables1.length + GAME.currentMap.minorCollectables2.length;
+		if (collectablesLeft==0)
+			zzfx(...[,,1288,,.09,.15,,1.37,1.8,,450,,.08,,,,,.65,.04]); 
+		else
+			zzfx(...[1.02,,1596,.01,.04,,1,1.63,,,,,,,,,,.52,.03]);
 	});
 
 });
