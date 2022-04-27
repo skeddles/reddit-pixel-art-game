@@ -22,6 +22,8 @@ new CollisionType('hubPortal', 'circle', function (levelWarp) {
 				
 			loadMap(levelWarp.levelName, mapData);
 
+			playSong('default');
+
 			GAME.player.immobile = Date.now()+500; //hold player in place for short amount of time
 		})
 		.catch(e => console.error('error loading map',e));

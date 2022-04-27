@@ -38,6 +38,13 @@ gulp.task("files", function () {
 		.pipe(gulp.dest("./build"));
 });
 
+
+//music task - copies music files
+gulp.task("music", function () {
+	return gulp.src('music/**/*.*')
+		.pipe(gulp.dest("./build/music"));
+});
+
 //levels task - copies level data files
 gulp.task("levels", function () {
 
@@ -89,6 +96,7 @@ gulp.task("image", function() {
 gulp.task('default',
 	gulp.series(
 		'files',
+		'music',
 		'levels',
 		'css',
 		'image',
@@ -103,6 +111,7 @@ gulp.task('watch', function(){
 
     //watch scripts folder for changes in any files
     gulp.watch(['files/**/*.*'], gulp.series('files'));
+    gulp.watch(['music/*.mp3'], gulp.series('music'));
     gulp.watch(['levels/*.json'], gulp.series('levels'));
 
     //watch scripts folder for changes in any files

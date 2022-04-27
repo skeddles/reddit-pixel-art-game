@@ -20,6 +20,7 @@ const URLPARAMS = new URLSearchParams(window.location.search);
 //=include _spritesheet.js
 //=include _hubworld.js
 //=include _saving.js
+//=include _music.js
 //=include tileTypes/*.js
 
 

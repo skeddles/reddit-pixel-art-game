@@ -107,6 +107,7 @@ function loadHubWorld () {
 				
 	//play start sound
 	zzfx(...[,,130,.07,.01,.12,1,.66,27,14,,,,,5]);
+	playSong('hubworld');
 }
 
 function spawnHubPortal (levelName, level) {
