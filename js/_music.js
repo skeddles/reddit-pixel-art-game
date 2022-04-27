@@ -10,12 +10,7 @@ function playSong(name) {
 	//if the song name is invalid, just play default instead
 	if (!GAME.songList.includes(name)) name = 'default';
 
-	//stop currently playing song 
-	if (MUSIC.CURRENT) {
-		console.log('stopping', MUSIC.CURRENT)
-		MUSIC.CURRENT.pause();
-		MUSIC.CURRENT.currentTime = 0; 
-	}
+	stopMusic();
 
 	//load song if not yet loaded
 	if (!MUSIC[name]) {
@@ -36,6 +31,14 @@ function playSong(name) {
 	MUSIC.CURRENT = MUSIC[name]
 }
 
+function stopMusic () {
+	//stop currently playing song 
+	if (MUSIC.CURRENT) {
+		console.log('stopping', MUSIC.CURRENT)
+		MUSIC.CURRENT.pause();
+		MUSIC.CURRENT.currentTime = 0; 
+	}
+}
 
 //get list of available songs
 fetch('music-list.json')
@@ -45,6 +48,7 @@ fetch('music-list.json')
 		console.log('got song data', GAME.songList );
 
 		GAME.songList.forEach(s => {
+			if (s=='default'||s=='hubworld') return;
 			$('.music-selection').insertAdjacentHTML('beforeend', '<option value="'+s+'">'+s+'</option>')
 		})
 		

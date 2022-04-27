@@ -297,3 +297,12 @@ $(".file-loader").addEventListener('change', e=> {
 
 	reader.readAsText($(".file-loader").files[0]);
 });
+
+//test music button
+$(".test-music").onclick = () => {
+	playSong($('.music-selection').value);
+}
+//test music button
+$(".stop-test-music").onclick = () => {
+	stopMusic();
+}
