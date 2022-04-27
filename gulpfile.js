@@ -41,6 +41,10 @@ gulp.task("files", function () {
 
 //music task - copies music files
 gulp.task("music", function () {
+
+	let levelList = fs.readdirSync('./music', {withFileTypes: true}).map(item => item.name.replace('.mp3',''))
+	fs.writeFileSync('./build/music-list.json', JSON.stringify(levelList), 'utf-8');
+
 	return gulp.src('music/**/*.*')
 		.pipe(gulp.dest("./build/music"));
 });

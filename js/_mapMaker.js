@@ -122,6 +122,7 @@ function createMapJSON () {
 	let levelData = {
 		title: $('.mapEditor .level-name').value,
 		author: $('.mapEditor .author-username').value,
+		music: $('.music-selection').value,
 		backgroundImage: $('.mapEditor .mapPreview').src,
 		invalidTiles: [],
 		walkableTiles: 0,

@@ -7,6 +7,9 @@ const MUSIC = {
 
 function playSong(name) {
 
+	//if the song name is invalid, just play default instead
+	if (!GAME.songList.includes(name)) name = 'default';
+
 	//stop currently playing song 
 	if (MUSIC.CURRENT) {
 		console.log('stopping', MUSIC.CURRENT)
@@ -32,3 +35,18 @@ function playSong(name) {
 	MUSIC[name].play();
 	MUSIC.CURRENT = MUSIC[name]
 }
+
+
+//get list of available songs
+fetch('music-list.json')
+	.then(response => response.json())
+	.then(data => {
+		GAME.songList = data;
+		console.log('got song data', GAME.songList );
+
+		GAME.songList.forEach(s => {
+			$('.music-selection').insertAdjacentHTML('beforeend', '<option value="'+s+'">'+s+'</option>')
+		})
+		
+	})
+	.catch(error => console.log(error));

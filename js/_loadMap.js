@@ -47,5 +47,5 @@ function loadMap (mapName, mapData) {
 	//play start sound
 	zzfx(...[,,130,.07,.01,.12,1,.66,27,14,,,,,5]);
 
-
+	playSong(mapData.music)
 }
