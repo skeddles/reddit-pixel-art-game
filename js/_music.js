@@ -47,10 +47,22 @@ fetch('music-list.json')
 		GAME.songList = data;
 		console.log('got song data', GAME.songList );
 
-		GAME.songList.forEach(s => {
-			if (s=='default'||s=='hubworld') return;
-			$('.music-selection').insertAdjacentHTML('beforeend', '<option value="'+s+'">'+s+'</option>')
+		GAME.songList.forEach(songFileName => {
+			if (songFileName=='default' || songFileName=='hubworld') return;
+			let song = parseSongTitle(songFileName);
+			$('.music-selection').insertAdjacentHTML('beforeend', '<option value="'+songFileName+'">'+song.clean+'</option>')
 		})
 		
 	})
 	.catch(error => console.log(error));
+
+function parseSongTitle (songFileName) {
+	let obj = {
+		name: songFileName.match(/(^.*)-by-/)[1],
+		author: '/u/' + songFileName.match(/-by-(.*$)/)[1],
+	};
+
+	obj.clean = obj.name +' by '+ obj.author;
+
+	return obj;
+}
