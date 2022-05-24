@@ -36,8 +36,8 @@ new CollisionType('killTiles', 'rect', function (tile) {
 
 		console.log('killtile',tile,TilePos(tile.x), TilePos(tile.y))
 
-		if ( TilePos(GAME.player.x) !== TilePos(tile.x) ) return;
-		if ( TilePos(GAME.player.y) !== TilePos(tile.y) ) return;
+		if ( TilePos(GAME.player.x) !== TilePos(tile.x) ) return false;
+		if ( TilePos(GAME.player.y) !== TilePos(tile.y) ) return false;
 
 		//lose a life
 		GAME.currentMap.lives--;

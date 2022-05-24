@@ -1,3 +1,14 @@
+
+/*
+A Collision should be created for each tile that needs to detect a collision with the player. This is defined separately from the TileType.
+
+new CollisionType(TILENAME, COLLISIONTYPE, ONCOLLISION);
+
+[TILENAME]		should be a string in camel case, must match a tile type
+[COLLISIONTYPE]	a string indicating what type of collision to use, 'rect' or 'circle'
+[ONCOLLISION] 	a function to run when the collision happens. if the collision needs to be canceled, return false. otherwise, the game will stop searching for collisions on this frame.
+*/
+
 class CollisionType {
 	constructor(objectHolderName, collisionType, onCollision) {
 		this.objectHolderName = objectHolderName;
@@ -14,9 +25,11 @@ class CollisionType {
 		// Loop through all of the objectsToCheck and see if any have a collision
 		let collision = this.objects.find(this.checkForCollision.bind(this));
 
+		//a collission was found
 		if (collision) {
-			this.onCollision(collision);
-			return true;
+			//run the onCollision function, but if it returns false, return false so we can keep searching
+			if (this.onCollision(collision) === false) return false;
+			else return true;
 		}
 	}
 
