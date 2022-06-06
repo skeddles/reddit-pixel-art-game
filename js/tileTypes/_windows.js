@@ -21,7 +21,11 @@ Object.keys(GAME.windowsData).forEach(windowId => {
 			
 		//check to see if there's no window on the tile above this one, if so: add a window to that space (to cover the 2-tile high character)
 			let windowList = [...GAME.currentMap.window1,...GAME.currentMap.window2,...GAME.currentMap.window3,...GAME.currentMap.window4];
-			let windowAbove = windowList.find(w => w.x == object.x && w.y == object.y-TILESIZE);
+			let windowAbove = windowList.find(w => {
+				//to see if the w (window) matches, we first have to know if it's already been converted to a pixi object, because if it has the x and y have been multiplied by the TILESIZE
+				if (w.hasOwnProperty('_eventsCount')) return w.x == object.x*TILESIZE && w.y == (object.y-1)*TILESIZE
+				else return w.x == object.x && w.y == object.y-1
+			});
 			if (!windowAbove) {
 				let aboveWindowSprite = new PIXI.Sprite(GAME.currentMap.spritesheet.textures[tileName]);
 				aboveWindowSprite.x = TILESIZE * object.x;
