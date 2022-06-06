@@ -34,11 +34,6 @@ new TileType('killTiles', [255,0,0], {
 
 new CollisionType('killTiles', 'rect', function (tile) {
 
-		console.log('killtile',tile,TilePos(tile.x), TilePos(tile.y))
-
-		if ( TilePos(GAME.player.x) !== TilePos(tile.x) ) return false;
-		if ( TilePos(GAME.player.y) !== TilePos(tile.y) ) return false;
-
 		//lose a life
 		GAME.currentMap.lives--;
 
@@ -63,5 +58,15 @@ new CollisionType('killTiles', 'rect', function (tile) {
 		
 		//sound
 		zzfx(...[1.09,,373,,.25,.42,4,2.97,.6,,,,.19,.7,-4.4,.7,,.42,.03]);
+	},
+
+	//collision filter (makes sure player is within tile to truly count it as a collision)
+	function (tile) {
+		console.log('killtile',tile,TilePos(tile.x), TilePos(tile.y))
+
+		if ( TilePos(GAME.player.x) !== TilePos(tile.x) ) return false;
+		if ( TilePos(GAME.player.y) !== TilePos(tile.y) ) return false;
+
+		return true;
 	}
 );

@@ -10,11 +10,12 @@ new CollisionType(TILENAME, COLLISIONTYPE, ONCOLLISION);
 */
 
 class CollisionType {
-	constructor(objectHolderName, collisionType, onCollision) {
+	constructor(objectHolderName, collisionType, onCollision, collisionFilter) {
 		this.objectHolderName = objectHolderName;
 		this.type = collisionType;
 		this.checkForCollision = CheckCollision[collisionType];
 		this.onCollision = onCollision;
+		this.collisionFilter = collisionFilter || false;
 
 		GAME.CollisionTypes.push(this);
 	}
@@ -23,13 +24,19 @@ class CollisionType {
 	check() {
 
 		// Loop through all of the objectsToCheck and see if any have a collision
-		let collision = this.objects.find(this.checkForCollision.bind(this));
+		// let collision = this.objects.find(this.checkForCollision.bind(this));
+		let collision = this.objects.find(object => {
+			let objectOverlap = this.checkForCollision(object);
+			// console.log('coll',collision, this.collisionFilter)
+			if (!objectOverlap) return false; //collision not found
+			if (objectOverlap && !this.collisionFilter) return true; //collision not found and no collisionFilter specified
+			return this.collisionFilter(object)?true:false; //the collision is valid, so return the result of the filter
+		});
 
-		//a collission was found
+		//a collission was found -- run the oncollision code and return as true to stop searching for collisions
 		if (collision) {
-			//run the onCollision function, but if it returns false, return false so we can keep searching
-			if (this.onCollision(collision) === false) return false;
-			else return true;
+			this.onCollision(collision);
+			return true;
 		}
 	}
 
