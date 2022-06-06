@@ -33,7 +33,7 @@ new TileType('entrance', [255,0,255], {
 
 new CollisionType('entrance', 'circle', function (entranceColission) {
 
-	console.log('hubbbb',GAME.playerInEntranceFlag)
+	//console.log('hubbbb',GAME.playerInEntranceFlag)
 
 	//player is still in entrance tile
 	if (TilePos(GAME.player.x) !== TilePos(entranceColission.x) || TilePos(GAME.player.y) !== TilePos(entranceColission.y) )
