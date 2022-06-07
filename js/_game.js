@@ -144,7 +144,9 @@ function gameLoop (delta) {
 	//TODO: Make camera stop at edges of maps
 
 	//update ui (this could be done only when needed, but it probably doesnt take much to run every frame)
-	if (!GAME.inHubWorld) {
+	if (GAME.inHubWorld) {
+		animateHubText();
+	} else {
 		GAME.tileTypes.forEach(type => type.uiUpdate());
 		animateTitleText();
 	}

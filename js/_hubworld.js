@@ -56,8 +56,44 @@ function loadHubWorld () {
 		myMask.drawCircle(TILESIZE/2, 0, TILESIZE*1.5);
 		myMask.endFill();
 		bg2.mask = myMask;
-		
 
+
+
+	//spawn level entrances
+	Object.keys(GAME.saveData.unlockedLevels).forEach((levelName, i) => {
+		let level = GAME.saveData.unlockedLevels[levelName];
+		
+		spawnHubPortal(levelName, level);
+	});
+	
+
+	//load player sprite into world
+	loadPlayer({
+		entrance: [{x:HUBWORLDSIZE/2,y:HUBWORLDSIZE/2}],
+	});
+	GAME.player.addChild(myMask);
+	GAME.player.immobile = Date.now()+500;
+
+			
+	//hub ui layer
+	GAME.level.hubUI = new PIXI.Container();
+		GAME.level.hubUI.y = 16;
+		GAME.level.hubUI.state = 0;
+		GAME.app.stage.addChild(GAME.level.hubUI);
+
+		//black box behind title
+		GAME.level.hubUI.bg = new PIXI.Graphics();
+		GAME.level.hubUI.bg.beginFill(0x000000, 0.5);
+		GAME.level.hubUI.bg.drawRect(0, -12+ (GAME.app.renderer.height / GAME.app.stage.scale.y), (GAME.app.renderer.width / GAME.app.stage.scale.x), 20); // x, y, width, height
+		GAME.level.hubUI.addChild(GAME.level.hubUI.bg);
+
+		//text 
+		GAME.level.hubUI.message = new PIXI.Text('hello FUCK',{fontFamily :"Press Start 2P", fontSize: 8, fill : 0xffffff, align : 'right'});
+		GAME.level.hubUI.message.x = (GAME.app.renderer.width / GAME.app.stage.scale.x) / 2 ;
+		GAME.level.hubUI.message.y = (GAME.app.renderer.height / GAME.app.stage.scale.y) - 1;
+		GAME.level.hubUI.message.anchor.set(0.5,1);
+		GAME.level.hubUI.message.scale.set(0.75,0.75);
+		GAME.level.hubUI.addChild(GAME.level.hubUI.message);
 
 	//check if new levels should be unlocked
 	let numberOfLevelsUnlocked = Object.keys(GAME.saveData.unlockedLevels).length;
@@ -76,38 +112,53 @@ function loadHubWorld () {
 				levelsUnlocked += unlockLevel();
 
 			//if levels were unlocked, show a message
-			if (levelsUnlocked > 0)
-				alert('Unlocked '+levelsUnlocked+' new levels!');
+			if (levelsUnlocked == 1) showMessage('Unlocked a new level!')
+			else if (levelsUnlocked > 0) showMessage('Unlocked '+levelsUnlocked+' new levels!')
 
 			saveGame();
 		} console.log('not enough beaten levels to unlock new one')
-	} console.log('no more levels to unlock')
+	} console.log('no more levels to unlock')	
 
-	//spawn level entrances
-	Object.keys(GAME.saveData.unlockedLevels).forEach((levelName, i) => {
-		let level = GAME.saveData.unlockedLevels[levelName];
-		
-		spawnHubPortal(levelName, level);
-	});
-	
-
-	//load player sprite into world
-	loadPlayer({
-		entrance: [{x:HUBWORLDSIZE/2,y:HUBWORLDSIZE/2}],
-	});
-	GAME.player.addChild(myMask);
-	GAME.player.immobile = Date.now()+500;
-
-
+	//ready
 	GAME.ready = true;
 	GAME.inHubWorld = true;
-
 	debug.onLoad();
-
 				
 	//play start sound
 	zzfx(...[,,130,.07,.01,.12,1,.66,27,14,,,,,5]);
 	playSong('hubworld');
+}
+
+//display a text message at the bottom of the screen
+function showMessage (text) {
+	GAME.level.hubUI.message.text = text;
+	GAME.level.hubUI.state = 1;
+}
+
+function animateHubText () {
+	
+	if (GAME.level.hubUI.state !== 0) console.log(GAME.level.hubUI.state)
+
+	//move up
+	if (GAME.level.hubUI.state == 1) {
+		GAME.level.hubUI.y -= 1;
+		//text reached top position
+		if (GAME.level.hubUI.y <= 0) {
+			GAME.level.hubUI.state = 2;
+			setTimeout(()=>{GAME.level.hubUI.state = 3;}, 2000); //keep message for Xms, then change to moving down state
+		}
+		return;
+	}
+
+	//move down
+	if (GAME.level.hubUI.state == 3) {
+		GAME.level.hubUI.y += 1;
+		//text reached bottom position
+		if (GAME.level.hubUI.y >= 16) {
+			GAME.level.hubUI.state = 0;
+		}
+		return;
+	}
 }
 
 function spawnHubPortal (levelName, level) {
