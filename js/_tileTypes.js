@@ -18,7 +18,7 @@ new TileType(NAME, COLORS, OPTIONS);
 */
 
 class TileType {
-	constructor (tileName, color, options) {
+	constructor (tileName, color, options = {}) {
 		this.name = tileName;
 		this.color = this.validateColor(color);
 		this.onLoad = options.onLoad || this.defaultTileLoader;
