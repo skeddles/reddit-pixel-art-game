@@ -143,6 +143,9 @@ function gameLoop (delta) {
 	GAME.level.y = lerp(GAME.level.y, -GAME.player.y  				+ (GAME.app.renderer.height / GAME.app.stage.scale.y / 2), 0.1);
 	//TODO: Make camera stop at edges of maps
 
+	//breadcrumb action (idk where else to put this)
+	checkBreadcrumbs();
+
 	//update ui (this could be done only when needed, but it probably doesnt take much to run every frame)
 	if (GAME.inHubWorld) {
 		animateHubText();
