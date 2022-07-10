@@ -1,7 +1,7 @@
 //keep track of which steps are visible to the user
 var loadingStep = 1;
 function nextLoadingStep (step) {
-	if (step < loadingStep) return;
+	if (step <= loadingStep) return;
 	else loadingStep++;
 
 	//display proper step
@@ -70,7 +70,7 @@ $(".loadMapData").addEventListener("change", function (e) {
 			console.log('map data is valid');
 
 			//scale up the map data overlay
-			$(".mapDataPreview").style.width = $(".mapDataPreview").width * TILESIZE + 'px';
+			$(".mapDataPreview").style.width = $(".mapDataPreview").naturalWidth * TILESIZE + 'px';
 			//$(".mapDataPreview").style.height = $(".mapDataPreview").height * TILESIZE + 'px'; // this is not needed because images automatically keep their aspect ratio by default
 		}
 		$(".mapDataPreview").src = reader.result;
@@ -85,9 +85,10 @@ function validateMapData (mapDataImg) {
 	//validate dimentions
 	let targetMapDataWidth = $(".mapPreview").width/TILESIZE;
 	let targetMapDataHeight = $(".mapPreview").height/TILESIZE;
+		console.log('input map data dimentions:',targetMapDataWidth+'x'+targetMapDataHeight,'==',mapDataImg.naturalWidth+'x'+mapDataImg.naturalHeight,'?', targetMapDataWidth+'x'+targetMapDataHeight==mapDataImg.naturalWidth+'x'+mapDataImg.naturalHeight,mapDataImg)
 
-	if (mapDataImg.width !== targetMapDataWidth) return 'map data dimentions must be exactly '+targetMapDataWidth+'x'+targetMapDataHeight+' pixels';
-	if (mapDataImg.height !== targetMapDataHeight) return 'map data dimentions must be exactly '+targetMapDataWidth+'x'+targetMapDataHeight+' pixels';
+	if (mapDataImg.naturalWidth !== targetMapDataWidth) return 'map data dimentions must be exactly '+targetMapDataWidth+'x'+targetMapDataHeight+' pixels';
+	if (mapDataImg.naturalHeight !== targetMapDataHeight) return 'map data dimentions must be exactly '+targetMapDataWidth+'x'+targetMapDataHeight+' pixels';
 
 	let mapData = createMapJSON();
 	for (var i=0; i<GAME.tileTypes.length; i++) {
