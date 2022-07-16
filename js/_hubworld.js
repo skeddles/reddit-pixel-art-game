@@ -58,13 +58,6 @@ function loadHubWorld () {
 		bg2.mask = myMask;
 
 
-
-	//spawn level entrances
-	Object.keys(GAME.saveData.unlockedLevels).forEach((levelName, i) => {
-		let level = GAME.saveData.unlockedLevels[levelName];
-		
-		spawnHubPortal(levelName, level);
-	});
 	
 
 	//load player sprite into world
@@ -95,7 +88,7 @@ function loadHubWorld () {
 		GAME.level.hubUI.message.scale.set(0.75,0.75);
 		GAME.level.hubUI.addChild(GAME.level.hubUI.message);
 
-	//check if new levels should be unlocked
+			//check if new levels should be unlocked
 	let numberOfLevelsUnlocked = Object.keys(GAME.saveData.unlockedLevels).length;
 	let numberOfLevelsBeaten = Object.keys(GAME.saveData.unlockedLevels).reduce((prev,curr,i,a) => prev + (GAME.saveData.unlockedLevels[curr].complete), 0)
 	let totalNumberOfLevels = GAME.levelList.length;
@@ -118,6 +111,14 @@ function loadHubWorld () {
 			saveGame();
 		} console.log('not enough beaten levels to unlock new one')
 	} console.log('no more levels to unlock')	
+
+
+	//spawn level entrances
+	Object.keys(GAME.saveData.unlockedLevels).forEach((levelName, i) => {
+		let level = GAME.saveData.unlockedLevels[levelName];
+		
+		spawnHubPortal(levelName, level);
+	});
 
 	//ready
 	GAME.ready = true;
