@@ -2,7 +2,7 @@
 const HUBWORLDSIZE = 32; //in tiles
 const HUBWORLDBGSIZE = 64; //in pixels
 
-function loadHubWorld () {
+function loadHubWorld (portalToSpawnAt) {
 
 	//if just testing a level, just display test message instead, and stop loading the hub world.
 	if (!GAME.saveData) {
@@ -60,13 +60,17 @@ function loadHubWorld () {
 
 	
 
-	//load player sprite into world
+	//load player sprite into world	
+	let spawnX = portalToSpawnAt ? GAME.saveData.unlockedLevels[portalToSpawnAt].x : HUBWORLDSIZE/2;
+	let spawnY = portalToSpawnAt ? GAME.saveData.unlockedLevels[portalToSpawnAt].y : HUBWORLDSIZE/2;
+	
+	GAME.playerInHubPortal = GAME.saveData.unlockedLevels[portalToSpawnAt] ? true : false;
+
 	loadPlayer({
-		entrance: [{x:HUBWORLDSIZE/2,y:HUBWORLDSIZE/2}],
+		entrance: [{x: spawnX, y: spawnY}],
 	});
 	GAME.player.addChild(myMask);
 	GAME.player.immobile = Date.now()+500;
-
 			
 	//hub ui layer
 	GAME.level.hubUI = new PIXI.Container();
@@ -81,7 +85,7 @@ function loadHubWorld () {
 		GAME.level.hubUI.addChild(GAME.level.hubUI.bg);
 
 		//text 
-		GAME.level.hubUI.message = new PIXI.Text('hello FUCK',{fontFamily :"Press Start 2P", fontSize: 8, fill : 0xffffff, align : 'right'});
+		GAME.level.hubUI.message = new PIXI.Text('',{fontFamily :"Press Start 2P", fontSize: 8, fill : 0xffffff, align : 'right'});
 		GAME.level.hubUI.message.x = (GAME.app.renderer.width / GAME.app.stage.scale.x) / 2 ;
 		GAME.level.hubUI.message.y = (GAME.app.renderer.height / GAME.app.stage.scale.y) - 1;
 		GAME.level.hubUI.message.anchor.set(0.5,1);

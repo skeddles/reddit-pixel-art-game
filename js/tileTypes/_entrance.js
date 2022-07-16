@@ -41,7 +41,7 @@ new CollisionType('entrance', 'circle', function (entranceColission) {
 
 	//if player is no longer in entrace, but has once again entered the tile the entrance is in
 	if (GAME.playerInEntranceFlag==false && TilePos(GAME.player.x) == TilePos(entranceColission.x) && TilePos(GAME.player.y) == TilePos(entranceColission.y) ) 
-		loadHubWorld();
+		loadHubWorld(GAME.currentMap.levelName);
 	
 	
 	if(!GAME.playerInEntranceFlag) {
