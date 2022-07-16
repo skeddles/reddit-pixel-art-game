@@ -59,25 +59,38 @@ function unlockLevel () {
 
 	//create random color for portal
 	let portalColor = PIXI.utils.rgb2hex([
-			0, //one value should always be 0
-			1, //one value should always be 1
-			Math.random(), //one value should be random
+			0, // one value should always be 0
+			1, // one value should always be 1
+			Math.random(), // one value should be random
 		].shuffle())
 
 		console.log(portalColor)
 	
 	//find coordinate to spawn portal at
 	let x, y;
-	let startNoSpawnZone = HUBWORLDSIZE/2 - 5, endNoSpawnZone = HUBWORLDSIZE/2 + 5;
+	let startNoSpawnZone = HUBWORLDSIZE/2 - 1;
+	let endNoSpawnZone = HUBWORLDSIZE/2 + 1;
+
+	const coords = [14,17,14,17,11,20,11,20,8,23,8,23,5,27,2,30];
+	
+	console.log('max distance ', listOfUnlockedLevels.length+1)
+
 	do {
-		x = irandom(Math.floor(HUBWORLDSIZE/3)-1) * 3 + 2;
-		y = irandom(Math.floor(HUBWORLDSIZE/3)-1) * 3 + 2;
+		x = coords[smaller(15, irandom(listOfUnlockedLevels.length))]
+		y = coords[smaller(15, irandom(listOfUnlockedLevels.length))]
+
+		//x = irandom(Math.floor(HUBWORLDSIZE/3)-1) * 3 + 2;
+		//y = irandom(Math.floor(HUBWORLDSIZE/3)-1) * 3 + 2;
 	} while(
+		//coordinate is too far from center
+		//(!x.isBetween(startSpawnZone,endSpawnZone) && !y.isBetween(startSpawnZone,endSpawnZone) ) 
+		//	||
 		//coordinate is in the middle too close to player
-		(x.isBetween(startNoSpawnZone,endNoSpawnZone) && y.isBetween(startNoSpawnZone,endNoSpawnZone) ) 
+		//(x.isBetween(startNoSpawnZone,endNoSpawnZone) && y.isBetween(startNoSpawnZone,endNoSpawnZone) ) 
+		//	||
 		//coordinate is already used by another level
-		|| alreadyALevelAtTheseCoordinates(x,y)
-		);
+		alreadyALevelAtTheseCoordinates(x,y)
+	);
 
 	//add to save data
 	GAME.saveData.unlockedLevels[randomLevel] = {
