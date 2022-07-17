@@ -63,7 +63,7 @@ function loadHubWorld (portalToSpawnAt) {
 	//load player sprite into world	
 	let spawnX = portalToSpawnAt ? GAME.saveData.unlockedLevels[portalToSpawnAt].x : HUBWORLDSIZE/2;
 	let spawnY = portalToSpawnAt ? GAME.saveData.unlockedLevels[portalToSpawnAt].y : HUBWORLDSIZE/2;
-	
+
 	GAME.playerInHubPortal = GAME.saveData.unlockedLevels[portalToSpawnAt] ? true : false;
 
 	loadPlayer({
@@ -71,6 +71,7 @@ function loadHubWorld (portalToSpawnAt) {
 	});
 	GAME.player.addChild(myMask);
 	GAME.player.immobile = Date.now()+500;
+		if (spawnX == HUBWORLDSIZE/2) GAME.player.x -= 8; //make player centered in room
 			
 	//hub ui layer
 	GAME.level.hubUI = new PIXI.Container();
@@ -92,7 +93,7 @@ function loadHubWorld (portalToSpawnAt) {
 		GAME.level.hubUI.message.scale.set(0.75,0.75);
 		GAME.level.hubUI.addChild(GAME.level.hubUI.message);
 
-			//check if new levels should be unlocked
+	//check if new levels should be unlocked
 	let numberOfLevelsUnlocked = Object.keys(GAME.saveData.unlockedLevels).length;
 	let numberOfLevelsBeaten = Object.keys(GAME.saveData.unlockedLevels).reduce((prev,curr,i,a) => prev + (GAME.saveData.unlockedLevels[curr].complete), 0)
 	let totalNumberOfLevels = GAME.levelList.length;
