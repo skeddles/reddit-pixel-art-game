@@ -21,6 +21,7 @@ const URLPARAMS = new URLSearchParams(window.location.search);
 //=include _hubworld.js
 //=include _breadcrumb.js
 //=include _saving.js
+//=include _unlockLevel.js
 //=include _music.js
 //=include tileTypes/*.js
 
