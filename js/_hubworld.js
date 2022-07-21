@@ -115,7 +115,19 @@ function loadHubWorld (portalToSpawnAt) {
 
 			saveGame();
 		} console.log('not enough beaten levels to unlock new one')
-	} console.log('no more levels to unlock')	
+	} 
+	//no more levels to unlock
+	else {
+		//player has beaten every level
+		if (numberOfLevelsBeaten == totalNumberOfLevels) {
+			//add empty portal
+			GAME.playerInHubPortal = true;
+			spawnHubPortal('GAMECOMPLETE', {x: 15.5, y:15.5}, false);
+			
+			if (!GAME.saveData.hasSeenOutro)
+				showMessage('A white portal appears...');
+		}
+	}
 
 
 	//spawn level entrances
@@ -185,7 +197,7 @@ function animateHub () {
 	}
 }
 
-function spawnHubPortal (levelName, level) {
+function spawnHubPortal (levelName, level, tint=true) {
 
 	
 	let spriteHolder = new PIXI.Container();
@@ -198,7 +210,7 @@ function spawnHubPortal (levelName, level) {
 		sprite.y = -5;
 		sprite.animationSpeed = 0.167; 
 		sprite.play();
-		sprite.tint = level.portalColor;
+		if (tint) sprite.tint = level.portalColor;
 		spriteHolder.addChild(sprite);
 
 	//player has beaten level - add level icon

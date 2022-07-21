@@ -29,6 +29,9 @@ const SPEED = 1.25;
 function gameLoop (delta) {
 	elapsed += delta;
 
+	//animate the intro cutscene
+	if (GAME.inCutscene) return animateCutscene();
+
 	//make sure the game is supposed to be running
 	if (!GAME.ready || !GAME.player) return;
 

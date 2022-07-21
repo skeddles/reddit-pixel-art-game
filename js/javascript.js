@@ -23,6 +23,7 @@ const URLPARAMS = new URLSearchParams(window.location.search);
 //=include _saving.js
 //=include _unlockLevel.js
 //=include _music.js
+//=include _cutscene.js
 //=include tileTypes/*.js
 
 

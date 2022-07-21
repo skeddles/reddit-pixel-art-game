@@ -25,18 +25,27 @@ function startGame() {
 
 	//no save data was found, create it now
 	if (!GAME.saveData) {
-		console.log('save data not found, creating new save')
-		GAME.saveData = {
-			unlockedLevels: {}
-		}
-
-		//unlock 2 levels by default
-		unlockLevel();
-		unlockLevel();
+		loadCutscene(INTRO_TEXT, 'portrait-confused', ()=>{
+			createSaveData();
+			loadHubWorld();
+		});
 	}
 
-	//start game
-	loadHubWorld();
+	//user has save data, load their hub world
+	else {
+		loadHubWorld();
+	}	
+}
+
+function createSaveData () {
+	console.log('save data not found, creating new save')
+	GAME.saveData = {
+		unlockedLevels: {}
+	}
+
+	//unlock 2 levels by default
+	unlockLevel();
+	unlockLevel();
 }
 
 function saveGame () {
@@ -53,7 +62,7 @@ function updateSaveData(updateFunction) {
 	if (GAME.currentMap.levelName == 'loadedLevel')  return console.warn('game cound\'t be saved, currently in test level');
 
 	//run the new change
-	updateFunction();
+	updateFunction(GAME.saveData);
 
 	//save the new data
 	saveGame();
