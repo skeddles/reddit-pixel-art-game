@@ -6,13 +6,15 @@ const INPUT = {
 document.addEventListener('keydown', e=> {
 	INPUT[e.code] = true;
 
-	//e.preventDefault();
+	if (!$("body").classList.contains('mapEditorVisible'))
+		e.preventDefault();
 });
 
 document.addEventListener('keyup', e=> {
 	INPUT[e.code] = false;
-
-	//e.preventDefault();
+	
+	if (!$("body").classList.contains('mapEditorVisible'))
+		e.preventDefault();
 });
 
 //when the window focus is lost, clear all inputs
