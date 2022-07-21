@@ -33,6 +33,7 @@ class TileType {
 
 	load () {
 		console.log('loading tiles:', this.name, this);
+
 		//process each object in the array of this tile with the onload function
 		try {
 			GAME.currentMap[this.name] = GAME.currentMap[this.name]

@@ -26,12 +26,13 @@ Object.keys(GAME.windowsData).forEach(windowId => {
 				if (w.hasOwnProperty('_eventsCount')) return w.x == object.x*TILESIZE && w.y == (object.y-1)*TILESIZE
 				else return w.x == object.x && w.y == object.y-1
 			});
+
 			if (!windowAbove) {
 				let aboveWindowSprite = new PIXI.Sprite(GAME.currentMap.spritesheet.textures[tileName]);
 				aboveWindowSprite.x = TILESIZE * object.x;
 				aboveWindowSprite.y = TILESIZE * (object.y-1);
 				GAME.level.windowLayer.addChild(aboveWindowSprite);
-			}
+			} else console.warn('window above',object )
 
 			return sprite;
 		}

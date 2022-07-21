@@ -35,12 +35,20 @@ function loadMap (mapName, mapData) {
 	GAME.level.windowLayer = new PIXI.Container();
 		GAME.level.windowLayer.zIndex = 2; //keeps on top of player
 		GAME.level.addChild(GAME.level.windowLayer);
+		//GAME.currentMap.windowWalls = [];
 
 //USER Interface
 	GAME.ui = new PIXI.Container();
 	GAME.app.stage.addChild(GAME.ui);
 
 //TILES
+
+	//make sure theres an array for each tile type, if not add one
+	GAME.tileTypes.forEach(type => {
+		//if the array doesn't exist (map doesnt have tiles of this type), add a blank array, and exit since nothing has to be done 
+		if (!GAME.currentMap[type.name]) GAME.currentMap[type.name] = []; 
+	})
+
 	//load all types of tiles
 	GAME.tileTypes.forEach(type => type.load());
 
