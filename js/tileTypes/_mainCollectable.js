@@ -26,7 +26,7 @@ new TileType('mainCollectable', [255,255,0], {
 		GAME.ui.addChild(GAME.ui.mainCollectableFound);
 	},
 	uiUpdate: ()=> {
-		GAME.ui.mainCollectableFound.text = GAME.currentMap.mainCollectable.length>0 ? '' : 'COMPLETE';
+		GAME.ui.mainCollectableFound.text = GAME.currentMap.mainCollectable.length>0 ? '' : 'LEVEL COMPLETE';
 	}
 });
 
