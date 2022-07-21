@@ -32,13 +32,27 @@ new TileType('mainCollectable', [255,255,0], {
 
 new CollisionType('mainCollectable', 'rect',  function () {
 
-	//save the game
-	updateSaveData(()=>{
-		GAME.saveData.unlockedLevels[GAME.currentMap.levelName].complete = true;
-	});
+	//extract the main collectable sprite
+	var image = new Image();
+	image.onload = function() {
+		let canv = document.createElement('CANVAS'); 
+		canv.width = TILESIZE;
+		canv.height = TILESIZE;
+		let ctx = canv.getContext('2d');
+		ctx.drawImage(image, 0, 0);
 
+		let iconData = canv.toDataURL()
+
+		//save the game
+		updateSaveData(()=>{
+			GAME.saveData.unlockedLevels[GAME.currentMap.levelName].complete = true;
+			GAME.saveData.unlockedLevels[GAME.currentMap.levelName].mainCollectableIcon = iconData;
+		});
+	};
+	image.src = GAME.currentMap.spriteSheetTexture;
+
+	//remove the collectable, play sound
 	GAME.level.removeChild(GAME.currentMap.mainCollectable[0]);
 	zzfx(...[,,730,,.06,.18,1,.23,,9.8,-158,.04,,,,,,.63,.05]);
 	GAME.currentMap.mainCollectable.length = 0;
-
-	});
+});

@@ -2,6 +2,8 @@
 const HUBWORLDSIZE = 32; //in tiles
 const HUBWORLDBGSIZE = 64; //in pixels
 
+const PARTICLETEXTURE = new PIXI.BaseTexture('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAPSURBVBhXY/gPBmDq/38AU7oL9YH+5D0AAAAASUVORK5CYII=');
+
 function loadHubWorld (portalToSpawnAt) {
 
 	//if just testing a level, just display test message instead, and stop loading the hub world.
@@ -20,7 +22,8 @@ function loadHubWorld (portalToSpawnAt) {
 		bg: {
 			width: HUBWORLDSIZE*TILESIZE,
 			height: HUBWORLDSIZE*TILESIZE,
-		}
+		},
+		hubPortalParticles: []
 	};
 	GAME.tileTypes.forEach(type => GAME.currentMap[type.name] = []);
 
@@ -56,9 +59,6 @@ function loadHubWorld (portalToSpawnAt) {
 		myMask.drawCircle(TILESIZE/2, 0, TILESIZE*1.5);
 		myMask.endFill();
 		bg2.mask = myMask;
-
-
-	
 
 	//load player sprite into world	
 	let spawnX = portalToSpawnAt ? GAME.saveData.unlockedLevels[portalToSpawnAt].x : HUBWORLDSIZE/2;
@@ -141,8 +141,26 @@ function showMessage (text) {
 	GAME.level.hubUI.state = 1;
 }
 
-function animateHubText () {
+function animateHub () {
 	
+	//animate floating complete icons
+	GAME.currentMap.hubPortal.forEach(p => {
+		if (p.completeIcon)
+			p.completeIcon.y = (TILESIZE/4) + Math.sin(performance.now() * 0.005 +p.iconAnimOffset);
+	});
+
+	//animate particles
+	GAME.currentMap.hubPortalParticles.forEach(p => {
+		p.y -= 0.5; //move upwards
+		
+		//respawn at bottom once it's more than a tile above the portal
+		if (p.y <= 0-TILESIZE) { 
+			p.y = TILESIZE - 4;
+			p.x = irandom(TILESIZE);
+		}
+		p.alpha = Math.abs(p.y+TILESIZE)  /(TILESIZE*2); //sets alpha based on y position
+	});
+
 	if (GAME.level.hubUI.state !== 0) console.log(GAME.level.hubUI.state)
 
 	//move up
@@ -169,7 +187,7 @@ function animateHubText () {
 
 function spawnHubPortal (levelName, level) {
 
-
+	
 	let spriteHolder = new PIXI.Container();
 		spriteHolder.x = TILESIZE * level.x;
 		spriteHolder.y = TILESIZE * level.y;
@@ -182,6 +200,35 @@ function spawnHubPortal (levelName, level) {
 		sprite.play();
 		sprite.tint = level.portalColor;
 		spriteHolder.addChild(sprite);
+
+	//player has beaten level - add level icon
+	if (level.complete) {
+		console.log('adding level complete icon for',level.mainCollectableIcon)
+		let iconTexture = new PIXI.BaseTexture(level.mainCollectableIcon);
+		let iconSprite = PIXI.Sprite.from(iconTexture);
+			iconSprite.scale.set(0.5,0.5);
+			iconSprite.x = TILESIZE/4;
+			iconSprite.y = TILESIZE/4;
+			//iconSprite.tint = level.portalColor;
+		spriteHolder.addChild(iconSprite);
+		spriteHolder.completeIcon = iconSprite;
+		spriteHolder.iconAnimOffset = Math.random() * 100;
+	} else spriteHolder.completeIcon = false;
+
+	//user collected every single collectable in this level
+	if (level.gotAllMinorCollectables) {
+
+		//generate a few particles
+		for (let i=0;i<2;i++) {
+			let particle = PIXI.Sprite.from(PARTICLETEXTURE);
+				particle.x = irandom(TILESIZE)
+				particle.y = TILESIZE - 4 + TILESIZE*i;
+				particle.tint = level.portalColor;
+				spriteHolder.addChild(particle);
+			
+			GAME.currentMap.hubPortalParticles.push(particle);
+		}
+	}
 
 	//used for looking up the level info when colliding with portal
 	spriteHolder.levelName = levelName;

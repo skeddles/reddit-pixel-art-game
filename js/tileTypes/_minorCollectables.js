@@ -91,6 +91,13 @@ GAME.minorCollectableData.forEach((color, collectableId) => {
 		updateSaveData(()=>{
 			GAME.saveData.unlockedLevels[GAME.currentMap.levelName].foundCollectables
 				.push({x: TilePos(minorCollectableCollission.x), y: TilePos(minorCollectableCollission.y)});
+			console.log('got em all?',GAME.ui.gotAllMinorCollectables)
+
+			let collectablesLeft = GAME.currentMap.minorCollectables0.length + GAME.currentMap.minorCollectables1.length + GAME.currentMap.minorCollectables2.length;
+
+
+			if (collectablesLeft == 0) 
+				GAME.saveData.unlockedLevels[GAME.currentMap.levelName].gotAllMinorCollectables = true;
 		});
 
 		//play sound (different sound if this was the last collectable)

@@ -22,7 +22,10 @@ function loadMap (mapName, mapData) {
 
 //SPRITESHEET
 
-	let spriteSheetTexture = new PIXI.BaseTexture(mapData.objectSpriteSheet || 'images/spritesheet.png');
+
+	GAME.currentMap.spriteSheetTexture = mapData.objectSpriteSheet || 'images/spritesheet.png';
+	let spriteSheetTexture = new PIXI.BaseTexture(GAME.currentMap.spriteSheetTexture);
+	
 	GAME.currentMap.spritesheet = new PIXI.Spritesheet(spriteSheetTexture, GAME.spriteSheetData);
 	GAME.currentMap.spritesheet.parse(e => console.log('spritesheet textures have been loaded'));
 	

@@ -148,7 +148,7 @@ function gameLoop (delta) {
 
 	//update ui (this could be done only when needed, but it probably doesnt take much to run every frame)
 	if (GAME.inHubWorld) {
-		animateHubText();
+		animateHub();
 	} else {
 		GAME.tileTypes.forEach(type => type.uiUpdate());
 		animateTitleText();
