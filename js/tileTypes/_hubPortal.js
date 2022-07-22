@@ -23,8 +23,7 @@ new CollisionType('hubPortal', 'circle', function (levelWarp) {
 				s.hasSeenOutro = true;
 			});
 			loadCutscene(OUTRO_TEXT, 'portrait-happy', ()=>{
-				//TODO: change this to loading the credits scene, which should load the hub world again at the end
-				loadHubWorld();
+				loadCredits();
 			});
 			return;
 		}

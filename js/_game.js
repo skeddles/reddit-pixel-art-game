@@ -31,6 +31,7 @@ function gameLoop (delta) {
 
 	//animate the intro cutscene
 	if (GAME.inCutscene) return animateCutscene();
+	if (GAME.inCredits) return animateCredits();
 
 	//make sure the game is supposed to be running
 	if (!GAME.ready || !GAME.player) return;
