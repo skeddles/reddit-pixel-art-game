@@ -1,10 +1,30 @@
 
 
-/*
+
 //clicked the full screen button
 $('.game .full-screen').addEventListener('click', e=> {
 	$('.game .view').requestFullscreen();
-});*/
+
+	GAME.app.renderer.resize(screen.width, screen.height);
+
+	let zoom = ceil(screen.height / 90);
+		console.log('zooming',screen.width, screen.height, zoom);
+
+	GAME.app.stage.scale.set(zoom);
+	
+
+});
+
+$('.game .view').addEventListener('fullscreenchange', e => { 
+	console.log('fullscreenchange', document.fullscreenElement)
+
+	//if there is no full screen element
+	if (!document.fullscreenElement) {
+		GAME.app.renderer.resize(640, 360);
+		GAME.app.stage.scale.set(4);
+	}
+});
+
 
 //clicked the load level
 $('.game .start-game').addEventListener('click', e=> {
