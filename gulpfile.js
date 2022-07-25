@@ -52,10 +52,15 @@ gulp.task("music", function () {
 //levels task - copies level data files
 gulp.task("levels", function () {
 	
+	console.log('generating levels files...')
+
 	//generate levels json file
 	let levelList = fs.readdirSync('./levels', {withFileTypes: true}).map(item => item.name);
-	fs.writeFileSync('./build/level-list.json', JSON.stringify(levelList), 'utf-8');
+		console.log('parsed levels list')
 
+	//save to file
+	fs.writeFileSync('./build/level-list.json', JSON.stringify(levelList), 'utf-8');
+		console.log('made level file')
 
 	//generate credits text
 	let authorList = [];
@@ -70,20 +75,29 @@ gulp.task("levels", function () {
 			musicianList.push(musician);
 		});
 
+	console.log('got musicians')
+
 	levelList.forEach(l => {
 		let level = require('./levels/'+l);
 		if (!authorList.includes(level.author))
 			authorList.push(level.author);
 	});
 
+	console.log('got level authors')
+
 	let creditsText = fs.readFileSync('./text/credits.txt', 'utf-8');
 	creditsText = creditsText.replace('{{LEVELMAKERS}}', authorList.join('\n'));
 	creditsText = creditsText.replace('{{MUSICMAKERS}}', musicianList.join('\n'));
 	creditsText = creditsText.replace(/\n/g,'\n\n');
 
+	console.log('got credit text')
+
+
 	fs.writeFileSync('./build/credits.txt', creditsText, 'utf-8');
 
-	console.log('levelList',levelList);
+	console.log('saved credit text')
+
+	//console.log('levelList',levelList);
 
 	return gulp.src('levels/*.json')
 		.pipe(gulp.dest("./build/levels"))
