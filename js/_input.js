@@ -26,7 +26,7 @@ document.addEventListener('keyup', e=> {
 	if (e.code=='ArrowLeft') INPUT['KeyA'] = false;
 	if (e.code=='ArrowRight') INPUT['KeyD'] = false;
 	
-	if (!$("body").classList.contbains('mapEditorVisible'))
+	if (!$("body").classList.contains('mapEditorVisible'))
 		e.preventDefault();
 });
 

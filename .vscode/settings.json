@@ -1,0 +1,7 @@
+{
+	"search.exclude": {
+		"./build": true,
+		"package-lock.json": true,
+		"package.json": true
+	}
+}

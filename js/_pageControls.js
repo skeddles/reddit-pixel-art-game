@@ -26,14 +26,23 @@ $('.game .view').addEventListener('fullscreenchange', e => {
 });
 
 
-//clicked the load level
-$('.game .start-game').addEventListener('click', e=> {
-	startGame();
-});
+
 
 //clicked the load level
-$('.game .load-level').addEventListener('click', e=> {
+// $('.game .start-game').addEventListener('click', e=> {
+// 	startGame();
+// });
+
+//clicked the load level
+// $('.game .load-level').addEventListener('click', e=> {
 	
+// });
+
+
+//clicked the load level
+$('.game .watch-credits').addEventListener('click', e=> {
+	document.body.scrollTop = document.documentElement.scrollTop = 0; //scroll to top of page
+	loadCredits();
 });
 
 //clicked the load level

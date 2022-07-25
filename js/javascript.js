@@ -25,6 +25,7 @@ const URLPARAMS = new URLSearchParams(window.location.search);
 //=include _music.js
 //=include _cutscene.js
 //=include _credits.js
+//=include _titleScreen.js
 //=include tileTypes/*.js
 
 

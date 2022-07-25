@@ -9,6 +9,8 @@ fetch('level-list.json')
 	.catch(error => console.log(error));
 
 function startGame() {
+	window.removeEventListener('click', startGame);
+
 	GAME.saveData = localStorage.getItem('redditGameSaveData');
 
 	//attempt to parse save data into object
