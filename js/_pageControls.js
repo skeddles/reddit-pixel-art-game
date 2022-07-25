@@ -40,25 +40,25 @@ $('.game .view').addEventListener('fullscreenchange', e => {
 
 
 //clicked the load level
-$('.game .watch-credits').addEventListener('click', e=> {
-	document.body.scrollTop = document.documentElement.scrollTop = 0; //scroll to top of page
-	loadCredits();
-});
+// $('.game .watch-credits').addEventListener('click', e=> {
+// 	document.body.scrollTop = document.documentElement.scrollTop = 0; //scroll to top of page
+// 	loadCredits();
+// });
 
 //clicked the load level
-$('.game .load-example-level').addEventListener('click', e=> {
+// $('.game .load-example-level').addEventListener('click', e=> {
 
-	clearOpenSaveGame();
+// 	clearOpenSaveGame();
 
-	const testLevelName = 'test-level-3-reddit-game-level.json';
+// 	const testLevelName = 'test-level-3-reddit-game-level.json';
 
-	fetch('/levels/'+testLevelName)
-		.then(response => response.json())
-		.then(exampleMapData => {
-			loadMap(testLevelName, exampleMapData);
-		})
-		.catch(e => console.error('error loading map',e));
-});
+// 	fetch('/levels/'+testLevelName)
+// 		.then(response => response.json())
+// 		.then(exampleMapData => {
+// 			loadMap(testLevelName, exampleMapData);
+// 		})
+// 		.catch(e => console.error('error loading map',e));
+// });
 
 
 //clicked the load level
