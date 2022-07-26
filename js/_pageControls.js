@@ -44,7 +44,7 @@ $('.game .view').addEventListener('fullscreenchange', e => {
 // 	document.body.scrollTop = document.documentElement.scrollTop = 0; //scroll to top of page
 // 	loadCredits();
 // });
-
+ 
 //clicked the load level
 // $('.game .load-example-level').addEventListener('click', e=> {
 

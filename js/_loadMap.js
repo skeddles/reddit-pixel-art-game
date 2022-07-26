@@ -3,6 +3,10 @@ var pp= 0;
 function loadMap (mapName, mapData) {
 	console.log('loading map', mapData);
 
+	GAME.inHubWorld = false;
+	GAME.inCutscene = false;
+	GAME.inCredits = false;
+
 	//clearing game of all objects
 	while(GAME.app.stage.children[0])
 		GAME.app.stage.removeChild(GAME.app.stage.children[0]);
