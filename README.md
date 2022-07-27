@@ -27,3 +27,16 @@ Change to the `reddit-pixel-art-game` folder and run `npm install`
 `gulp files` - copy all files to build 
 
 `gulp image` - minify all image files (except thumbnails)
+
+### How to Contribute
+
+1. Fork this repo
+2. Clone the repo to your machine
+3. Add / make your changes
+4. Commit / push the changes to your repo
+5. Open a pull request from your repo
+
+### License
+
+MIT
+
